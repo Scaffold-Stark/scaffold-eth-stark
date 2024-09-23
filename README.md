@@ -11,8 +11,8 @@ Check requirements at [scaffold-stark-2](https://github.com/Scaffold-Stark/scaff
 1. Clone the repo
 
 ```bash
-git clone https://github.com/Quantum3-Labs/eth-stark-template/tree/main
-cd eth-stark-template
+git clone https://github.com/Scaffold-Stark/scaffold-eth-stark
+cd scaffold-eth-stark
 ```
 
 2. Install dependencies
