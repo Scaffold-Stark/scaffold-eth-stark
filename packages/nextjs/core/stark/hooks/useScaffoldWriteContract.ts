@@ -109,9 +109,3 @@ export const useScaffoldWriteContract = <
     writeAsync: sendContractWriteTx,
   };
 };
-
-useScaffoldWriteContract({
-  contractName: "Eth",
-  functionName: "transfer",
-  args: ["1", 1],
-});
