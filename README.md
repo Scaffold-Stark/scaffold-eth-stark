@@ -1,4 +1,4 @@
-# Starknet and Eth cross-chain template
+# Starknet and Eth multichain template ( planning )
 
 This project is a template for creating Starknet and Eth cross-chain applications. It uses the Scaffold-ETH-2 and Scaffold-Starknet-2 libraries to create a project that can be used as a starting point for any starknet and eth application.
 
