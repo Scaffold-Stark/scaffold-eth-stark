@@ -9,13 +9,12 @@ import { useDynamicWriteContract } from "~~/core/dynamic/hooks/useDynamicWriteCo
 import { useGlobalState } from "~~/core/dynamic/services/store/global";
 import { useScaffoldEventHistory } from "~~/core/eth/hooks";
 
-
 const Home = () => {
   const currentChain = useGlobalState(state => state.currentChain);
   const { address } = useDynamicAccount();
-  const { targetNetwork } = useDynamicTargetNetwork({ currentChain: currentChain })
+  const { targetNetwork } = useDynamicTargetNetwork({ currentChain: currentChain });
   const [greetingState, setGreetingState] = useState("");
-  
+
   const {
     isLoading: isGreetingLoading,
     data: greeting,
