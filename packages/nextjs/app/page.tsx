@@ -2,16 +2,20 @@
 
 import React, { useEffect, useState } from "react";
 import { useDynamicAccount } from "~~/core/dynamic/hooks/useDynamicAccount";
+import { useDynamicEventHistory } from "~~/core/dynamic/hooks/useDynamicEventHistory";
 import { useDynamicReadContract } from "~~/core/dynamic/hooks/useDynamicReadContract";
+import { useDynamicTargetNetwork } from "~~/core/dynamic/hooks/useDynamicTargetNetwork";
 import { useDynamicWriteContract } from "~~/core/dynamic/hooks/useDynamicWriteContract";
 import { useGlobalState } from "~~/core/dynamic/services/store/global";
+import { useScaffoldEventHistory } from "~~/core/eth/hooks";
+
 
 const Home = () => {
   const currentChain = useGlobalState(state => state.currentChain);
   const { address } = useDynamicAccount();
-
+  const { targetNetwork } = useDynamicTargetNetwork({ currentChain: currentChain })
   const [greetingState, setGreetingState] = useState("");
-
+  
   const {
     isLoading: isGreetingLoading,
     data: greeting,
@@ -70,6 +74,10 @@ const Home = () => {
             <tr>
               <td className="font-bold max-w-[200px]">YourContract greeting</td>
               <td className="text-left">{isGreetingLoading ? "Loading..." : String(greeting)}</td>
+            </tr>
+            <tr>
+              <td className="font-bold max-w-[200px]">Network</td>
+              <td className="text-left">{targetNetwork?.name}</td>
             </tr>
           </tbody>
         </table>

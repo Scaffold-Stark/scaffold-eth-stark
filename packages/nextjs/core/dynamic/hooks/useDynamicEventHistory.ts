@@ -20,67 +20,65 @@ export function useDynamicEventHistory<
   TEventNameStrk extends ExtractAbiEventNamesStrk<ContractAbiStrk<ContractNameStrk>>,
   TEventNameEth extends ExtractAbiEventNamesEth<ContractAbiEth<TContractNameEth>>,
 >({
-  strk,
-  eth,
+  contractName,
+  eventName,
+  fromBlock,
+  filters,
+  blockData = false,
+  transactionData = false,
+  receiptData = false,
+  watch = false,
+  enabled = false,
   currentChain,
 }: {
-  strk: {
-    contractName: TContractNameStrk;
-    eventName: TEventNameStrk;
-    fromBlock: bigint;
-    filters?: any;
-    blockData?: boolean;
-    transactionData?: boolean;
-    receiptData?: boolean;
-    watch?: boolean;
-    enabled?: boolean;
-  };
-  eth: {
-    contractName: TContractNameEth;
-    eventName: TEventNameEth;
-    fromBlock: bigint;
-    filters?: EventFiltersEth<TContractNameEth, TEventNameEth>;
-    blockData?: boolean;
-    transactionData?: boolean;
-    receiptData?: boolean;
-    watch?: boolean;
-    enabled?: boolean;
-  };
+  contractName: TContractNameEth | TContractNameStrk;
+  eventName: TEventNameEth | TEventNameStrk;
+  fromBlock: bigint;
+  filters?: EventFiltersEth<TContractNameEth, TEventNameEth> | any;
+  blockData?: boolean;
+  transactionData?: boolean;
+  receiptData?: boolean;
+  watch?: boolean;
+  enabled?: boolean;
   currentChain: string;
 }) {
-  const ethOptions = {
-    contractName: eth.contractName,
-    eventName: eth.eventName,
-    fromBlock: eth.fromBlock,
-    filters: eth.filters,
-    blockData: eth.blockData,
-    transactionData: eth.transactionData,
-    receiptData: eth.receiptData,
-    watch: eth.watch,
-    enabled: eth.enabled,
-  };
-
-  const strkOptions = {
-    contractName: strk.contractName,
-    eventName: strk.eventName,
-    fromBlock: strk.fromBlock,
-    filters: strk.filters,
-    blockData: strk.blockData,
-    transactionData: strk.transactionData,
-    receiptData: strk.receiptData,
-    watch: strk.watch,
-    enabled: strk.enabled,
-  };
-
-  const { data: strkData, isLoading: loadingStrk } = useStrkScaffoldEventHistory(strkOptions);
-  const { data: ethData, isLoading: loadingEth } = useEthScaffoldEventHistory(ethOptions);
+  const {
+    data: strkData,
+    isLoading: loadingStrk,
+    error: strkError,
+  } = useStrkScaffoldEventHistory({
+    contractName: contractName as TContractNameStrk,
+    eventName: eventName as TEventNameStrk,
+    fromBlock: fromBlock,
+    filters: filters as any,
+    blockData: blockData,
+    transactionData: transactionData,
+    receiptData: receiptData,
+    watch: watch,
+    enabled: enabled,
+  });
+  const {
+    data: ethData,
+    isLoading: loadingEth,
+    error: ethError,
+  } = useEthScaffoldEventHistory({
+    contractName: contractName as TContractNameEth,
+    eventName: eventName as TEventNameEth,
+    fromBlock: fromBlock,
+    filters: filters as any,
+    blockData: blockData,
+    transactionData: transactionData,
+    receiptData: receiptData,
+    watch: watch,
+    enabled: enabled,
+  });
 
   const result = useMemo(() => {
     if (currentChain === ChainType.Ethereum) {
-      return { data: ethData, isLoading: loadingEth };
+      return { data: ethData, isLoading: loadingEth, error: ethError };
     }
-    return { data: strkData, isLoading: loadingStrk };
-  }, [currentChain, ethData, loadingEth, strkData, loadingStrk]);
+    return { data: strkData, isLoading: loadingStrk, error: strkError };
+  }, [currentChain, strkData, loadingStrk, strkError, ethData, loadingEth, ethError]);
 
   return result;
 }
