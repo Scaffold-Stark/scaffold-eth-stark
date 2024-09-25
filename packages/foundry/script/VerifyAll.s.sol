@@ -17,7 +17,9 @@ struct FfiResult {
 }
 
 interface tempVm {
-  function tryFfi(string[] calldata) external returns (FfiResult memory);
+  function tryFfi(
+    string[] calldata
+  ) external returns (FfiResult memory);
 }
 
 contract VerifyAll is Script {
@@ -39,7 +41,9 @@ contract VerifyAll is Script {
     }
   }
 
-  function _verifyIfContractDeployment(string memory content) internal {
+  function _verifyIfContractDeployment(
+    string memory content
+  ) internal {
     string memory txType = abi.decode(
       vm.parseJson(content, searchStr(currTransactionIdx, "transactionType")),
       (string)
@@ -49,7 +53,9 @@ contract VerifyAll is Script {
     }
   }
 
-  function _verifyContract(string memory content) internal {
+  function _verifyContract(
+    string memory content
+  ) internal {
     string memory contractName = abi.decode(
       vm.parseJson(content, searchStr(currTransactionIdx, "contractName")),
       (string)
@@ -98,7 +104,9 @@ contract VerifyAll is Script {
     return;
   }
 
-  function nextTransaction(string memory content) external view returns (bool) {
+  function nextTransaction(
+    string memory content
+  ) external view returns (bool) {
     try this.getTransactionFromRaw(content, currTransactionIdx) {
       return true;
     } catch {
@@ -106,11 +114,9 @@ contract VerifyAll is Script {
     }
   }
 
-  function _getCompiledBytecode(string memory contractName)
-    internal
-    view
-    returns (string memory compiledBytecode)
-  {
+  function _getCompiledBytecode(
+    string memory contractName
+  ) internal view returns (string memory compiledBytecode) {
     string memory root = vm.projectRoot();
     string memory path =
       string.concat(root, "/out/", contractName, ".sol/", contractName, ".json");

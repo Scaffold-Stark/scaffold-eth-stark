@@ -2,6 +2,8 @@
 
 // @refresh reset
 import { useState } from "react";
+import Image from "next/image";
+import WalletIcon from "../../../public/icons/connect-wallet-icon.svg";
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
@@ -36,13 +38,10 @@ export const CustomConnectButton = () => {
 
   return status == "disconnected" ? (
     <>
-      <button
-        className={`rounded-[18px] btn-sm font-bold px-8 bg-btn-wallet`}
-        onClick={handleWalletConnect}
-        type="button"
-      >
-        Connect
-      </button>
+      <div className="btn-connect-wallet" onClick={handleWalletConnect}>
+        <p>Connect</p>
+        <Image src={WalletIcon} alt="wallet-icon" height={15} width={15} />
+      </div>
       <ConnectModal isOpen={modalOpen} onClose={handleModalClose} />
     </>
   ) : chainId !== targetNetwork.id ? (

@@ -1,6 +1,8 @@
 "use client";
 
 // @refresh reset
+import Image from "next/image";
+import WalletIcon from "../../../public/icons/connect-wallet-icon.svg";
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
@@ -31,9 +33,10 @@ export const RainbowKitCustomConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <button className="btn btn-primary btn-sm" onClick={openConnectModal} type="button">
-                    Connect Wallet
-                  </button>
+                  <div className="btn-connect-wallet" onClick={openConnectModal}>
+                    <p>Connect</p>
+                    <Image src={WalletIcon} alt="wallet-icon" height={15} width={15} />
+                  </div>
                 );
               }
 

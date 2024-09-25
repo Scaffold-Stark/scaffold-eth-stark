@@ -1,10 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  CommonInputProps,
-  InputBase,
-  isValidInteger,
-} from "~~/components/scaffold-stark";
 import { parseEther } from "ethers";
+import { CommonInputProps, InputBase, isValidInteger } from "~~/components/scaffold-stark";
 
 type IntegerInputProps = CommonInputProps<string | bigint> & {
   variant?: string;
@@ -26,9 +22,7 @@ export const IntegerInput = ({
       return;
     }
 
-    return inputError
-      ? onChange(value)
-      : onChange(parseEther(value.toString()).toString());
+    return inputError ? onChange(value) : onChange(parseEther(value.toString()).toString());
   }, [onChange, value, inputError]);
 
   useEffect(() => {
@@ -51,9 +45,7 @@ export const IntegerInput = ({
             data-tip="Multiply by 10^18 (wei)"
           >
             <button
-              className={`${
-                disabled ? "cursor-not-allowed" : "cursor-pointer"
-              } font-semibold px-4 text-accent`}
+              className={`${disabled ? "cursor-not-allowed" : "cursor-pointer"} font-semibold px-4 text-accent`}
               onClick={multiplyBy1e18}
               disabled={disabled}
             >

@@ -4,11 +4,7 @@ import { Address } from "@starknet-react/chains";
 import { validateAndParseAddress } from "starknet";
 
 export const replacer = (_key: string, value: unknown) => {
-  if (
-    value != undefined &&
-    (typeof value !== "object" || typeof value === null) &&
-    value.toString().length >= 76
-  ) {
+  if (value != undefined && (typeof value !== "object" || typeof value === null) && value.toString().length >= 76) {
     return validateAndParseAddress(value.toString());
   } else if (typeof value === "bigint") {
     return value.toString();
