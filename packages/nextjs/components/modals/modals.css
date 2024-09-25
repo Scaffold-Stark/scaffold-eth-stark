@@ -1,0 +1,28 @@
+.bg-modal-network {
+  border-radius: 20px;
+  border: 1px solid #5b749d;
+  background: #14161d;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.active-network {
+  background: #363959;
+}
+
+.bg-network {
+  background: #1d1e29;
+}
+
+.network {
+  border-radius: 6px;
+  padding: 22px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+}
