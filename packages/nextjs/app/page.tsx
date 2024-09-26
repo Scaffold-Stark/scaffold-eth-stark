@@ -149,7 +149,9 @@ const Home = () => {
             </tr>
           </tbody>
         </table>
-        <button onClick={handleTransaction} className="mt-5 rounded-full bg-slate-500 px-4 py-2 text-white">Transaction Dynamic Hook</button>
+        <button onClick={handleTransaction} className="mt-5 rounded-full bg-slate-500 px-4 py-2 text-white">
+          Transaction Dynamic Hook
+        </button>
         {/* input for greeting */}
 
         <input
