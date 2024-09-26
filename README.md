@@ -24,13 +24,13 @@ yarn install
 3. Run a local eth network in the first terminal:
 
 ```bash
-yarn chain::eth
+yarn chain:eth
 ```
 
 4. Run a local starknet network in the second terminal:
 
 ```bash
-yarn chain::strk
+yarn chain:strk
 ```
 
 5. Copy .env.example to .env and set the correct variables
@@ -40,16 +40,10 @@ cp ./packages/foundry/.env.example ./packages/foundry/.env
 cp ./packages/snfoundry/.env.example ./packages/snfoundry/.env
 ```
 
-6. Deploy your smart contract(s) on the eth network:
+6. Deploy your smart contract(s) on the eth network and starknet network:
 
 ```bash
-yarn deploy::eth
-```
-
-6. Deploy your smart contract(s) on the starknet network:
-
-```bash
-yarn deploy::strk
+yarn deploy
 ```
 
 7. Run the frontend:
