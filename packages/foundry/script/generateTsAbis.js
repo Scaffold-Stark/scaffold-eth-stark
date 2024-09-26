@@ -112,7 +112,7 @@ function main() {
     });
   });
 
-  const TARGET_DIR = "../nextjs/core/eth/contracts/";
+  const TARGET_DIR = "../nextjs/lib/scaffold-eth-2/contracts/";
 
   const fileContent = Object.entries(allGeneratedContracts).reduce(
     (content, [chainId, chainConfig]) => {

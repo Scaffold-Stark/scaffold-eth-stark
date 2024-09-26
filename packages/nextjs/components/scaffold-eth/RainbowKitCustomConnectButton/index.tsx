@@ -8,10 +8,10 @@ import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useNetworkColor } from "@scaffold-eth-2/hooks/scaffold-eth/useNetworkColor";
+import { useTargetNetwork } from "@scaffold-eth-2/hooks/scaffold-eth/useTargetNetwork";
+import { getBlockExplorerAddressLink } from "@scaffold-eth-2/utils/scaffold-eth";
 import { Address } from "viem";
-import { useNetworkColor } from "~~/core/eth/hooks/useNetworkColor";
-import { useTargetNetwork } from "~~/core/eth/hooks/useTargetNetwork";
-import { getBlockExplorerAddressLink } from "~~/core/eth/utils/scaffold-eth";
 
 /**
  * Custom Wagmi Connect Button (watch balance + custom design)

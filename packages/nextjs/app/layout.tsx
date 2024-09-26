@@ -10,11 +10,12 @@ export const metadata: Metadata = {
   icons: "/logo.ico",
 };
 
-const ScaffoldStarkApp = ({ children }: { children: React.ReactNode }) => {
+const ScaffoldEthStarkApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
       <body>
         <ThemeProvider forcedTheme="light">
+          {" "}
           <ScaffoldAppWithProviders>{children}</ScaffoldAppWithProviders>
         </ThemeProvider>
       </body>
@@ -22,4 +23,4 @@ const ScaffoldStarkApp = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default ScaffoldStarkApp;
+export default ScaffoldEthStarkApp;

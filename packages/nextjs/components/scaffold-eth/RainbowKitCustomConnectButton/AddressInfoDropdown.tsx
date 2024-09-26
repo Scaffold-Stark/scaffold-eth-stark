@@ -1,5 +1,8 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
+import { BlockieAvatar, isENS } from "@scaffold-eth-2/components/scaffold-eth";
+import { useOutsideClick } from "@scaffold-eth-2/hooks/scaffold-eth/useOutsideClick";
+import { getTargetNetworks } from "@scaffold-eth-2/utils/scaffold-eth";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { getAddress } from "viem";
 import { Address } from "viem";
@@ -13,9 +16,6 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { BlockieAvatar, isENS } from "~~/components/scaffold-eth";
-import { useOutsideClick } from "~~/core/eth/hooks/useOutsideClick";
-import { getTargetNetworks } from "~~/core/eth/utils/scaffold-eth";
 
 const allowedNetworks = getTargetNetworks();
 

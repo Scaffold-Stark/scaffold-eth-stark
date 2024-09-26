@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BlockieAvatar } from "../BlockieAvatar";
 import GenericModal from "./GenericModal";
+import { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
+import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
 import { Connector, useConnect } from "@starknet-react/core";
 import { useTheme } from "next-themes";
 import { useLocalStorage } from "usehooks-ts";
 import Wallet from "~~/components/scaffold-stark/CustomConnectButton/Wallet";
-import { BurnerConnector } from "~~/core/stark/services/web3/stark-burner/BurnerConnector";
-import { burnerAccounts } from "~~/core/stark/utils/devnetAccounts";
 
 type Props = {
   isOpen: boolean;

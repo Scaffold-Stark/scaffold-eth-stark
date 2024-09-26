@@ -4,8 +4,8 @@ import EthNetwork from "../../public/icons/eth-network-icon.svg";
 import StrkNetwork from "../../public/icons/strk-network-icon.svg";
 import "./modals.css";
 import { useLocalStorage } from "usehooks-ts";
-import { useGlobalState } from "~~/core/dynamic/services/store/global";
-import { ChainType } from "~~/core/dynamic/types/chains";
+import { useGlobalState } from "~~/dynamic/services/store/global";
+import { ChainType } from "~~/dynamic/types/chains";
 
 const ArrowDownIcon = ({ color }: { color: string }) => {
   return (

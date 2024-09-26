@@ -1,6 +1,13 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { NetworkOptions } from "./NetworkOptions";
+import { BlockieAvatar, isENS } from "@scaffold-stark-2/components/scaffold-stark";
+import { useOutsideClick } from "@scaffold-stark-2/hooks/scaffold-stark";
+import useConditionalStarkProfile from "@scaffold-stark-2/hooks/useConditionalStarkProfile";
+import { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
+import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
+import { getStarknetPFPIfExists } from "@scaffold-stark-2/utils/profile";
+import { getTargetNetworks } from "@scaffold-stark-2/utils/scaffold-stark";
 import { Address } from "@starknet-react/chains";
 import { useConnect, useDisconnect, useNetwork } from "@starknet-react/core";
 import { useTheme } from "next-themes";
@@ -17,13 +24,6 @@ import {
   QrCodeIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { BlockieAvatar, isENS } from "~~/components/scaffold-stark";
-import { useOutsideClick } from "~~/core/stark/hooks/";
-import useConditionalStarkProfile from "~~/core/stark/hooks/useConditionalStarkProfile";
-import { BurnerConnector } from "~~/core/stark/services/web3/stark-burner/BurnerConnector";
-import { burnerAccounts } from "~~/core/stark/utils/devnetAccounts";
-import { getStarknetPFPIfExists } from "~~/core/stark/utils/profile";
-import { getTargetNetworks } from "~~/core/stark/utils/scaffold-stark";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -78,7 +78,12 @@ export const AddressInfoDropdown = ({
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">
         <summary tabIndex={0} className="btn-connect-wallet">
-          <Image src={connector?.icon?.light ?? ""} alt="Wallet Picture" width={15} height={15} />
+          <Image
+            src={typeof connector?.icon === "string" ? connector.icon : connector?.icon?.light ?? ""}
+            alt="Wallet Picture"
+            width={15}
+            height={15}
+          />
           <span>
             {isENS(displayName) ? displayName : profile?.name || address?.slice(0, 4) + "..." + address?.slice(-4)}
           </span>

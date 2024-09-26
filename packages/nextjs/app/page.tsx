@@ -2,16 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import { parseEther } from "viem";
-import { useDynamicAccount } from "~~/core/dynamic/hooks/useDynamicAccount";
-import { useDynamicContract } from "~~/core/dynamic/hooks/useDynamicContract";
-import { useDynamicDeployContract } from "~~/core/dynamic/hooks/useDynamicDeployContract";
-import { useDynamicEventHistory } from "~~/core/dynamic/hooks/useDynamicEventHistory";
-import { useDynamicReadContract } from "~~/core/dynamic/hooks/useDynamicReadContract";
-import { useDynamicTargetNetwork } from "~~/core/dynamic/hooks/useDynamicTargetNetwork";
-import { useDynamicTransactor } from "~~/core/dynamic/hooks/useDynamicTransactor";
-import { useDynamicWriteContract } from "~~/core/dynamic/hooks/useDynamicWriteContract";
-import { useGlobalState } from "~~/core/dynamic/services/store/global";
-import { ChainType } from "~~/core/dynamic/types/chains";
+import { useDynamicAccount } from "~~/dynamic/hooks/useDynamicAccount";
+import { useDynamicContract } from "~~/dynamic/hooks/useDynamicContract";
+import { useDynamicDeployContract } from "~~/dynamic/hooks/useDynamicDeployContract";
+import { useDynamicEventHistory } from "~~/dynamic/hooks/useDynamicEventHistory";
+import { useDynamicReadContract } from "~~/dynamic/hooks/useDynamicReadContract";
+import { useDynamicTargetNetwork } from "~~/dynamic/hooks/useDynamicTargetNetwork";
+import { useDynamicTransactor } from "~~/dynamic/hooks/useDynamicTransactor";
+import { useDynamicWriteContract } from "~~/dynamic/hooks/useDynamicWriteContract";
+import { useGlobalState } from "~~/dynamic/services/store/global";
+import { ChainType } from "~~/dynamic/types/chains";
 
 const Home = () => {
   const currentChain = useGlobalState(state => state.currentChain);
