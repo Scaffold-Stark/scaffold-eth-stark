@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import EthNetwork from "../../public/icons/eth-network-icon.svg";
 import StrkNetwork from "../../public/icons/strk-network-icon.svg";
-import GenericModal from "../scaffold-stark/CustomConnectButton/GenericModal";
+import GenericModal from "./scaffold-stark/CustomConnectButton/GenericModal";
 import { useLocalStorage } from "usehooks-ts";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";

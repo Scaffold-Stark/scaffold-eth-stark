@@ -1,8 +1,8 @@
 "use client";
 
-import SelectNetWorkModal from "./modals/SelectNetworkModal";
-import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
-import { CustomConnectButton } from "~~/components/scaffold-stark/CustomConnectButton";
+import SelectNetWorkModal from "./Wallet/SelectNetworkModal";
+import { RainbowKitCustomConnectButton } from "~~/components/Wallet/scaffold-eth";
+import { CustomConnectButton } from "~~/components/Wallet/scaffold-stark/CustomConnectButton";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
 

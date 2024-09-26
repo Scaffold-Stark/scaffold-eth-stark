@@ -6,7 +6,7 @@ import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
 import { Connector, useConnect } from "@starknet-react/core";
 import { useTheme } from "next-themes";
 import { useLocalStorage } from "usehooks-ts";
-import Wallet from "~~/components/scaffold-stark/CustomConnectButton/Wallet";
+import Wallet from "~~/components/Wallet/scaffold-stark/CustomConnectButton/Wallet";
 
 type Props = {
   isOpen: boolean;

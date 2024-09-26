@@ -2,7 +2,7 @@
 
 // @refresh reset
 import Image from "next/image";
-import WalletIcon from "../../../public/icons/connect-wallet-icon.svg";
+import WalletIcon from "../../../../public/icons/connect-wallet-icon.svg";
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
