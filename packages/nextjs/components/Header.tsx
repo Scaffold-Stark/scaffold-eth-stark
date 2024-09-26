@@ -1,10 +1,10 @@
 "use client";
 
+import SelectNetWorkModal from "./modals/SelectNetworkModal";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { CustomConnectButton } from "~~/components/scaffold-stark/CustomConnectButton";
 import { useGlobalState } from "~~/core/dynamic/services/store/global";
 import { ChainType } from "~~/core/dynamic/types/chains";
-import SelectNetWorkModal from "./modals/SelectNetworkModal";
 
 export const Header = () => {
   const currentChain = useGlobalState(state => state.currentChain);

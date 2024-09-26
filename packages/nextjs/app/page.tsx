@@ -2,18 +2,41 @@
 
 import React, { useEffect, useState } from "react";
 import { useDynamicAccount } from "~~/core/dynamic/hooks/useDynamicAccount";
+import { useDynamicContract } from "~~/core/dynamic/hooks/useDynamicContract";
+import { useDynamicDeployContract } from "~~/core/dynamic/hooks/useDynamicDeployContract";
 import { useDynamicEventHistory } from "~~/core/dynamic/hooks/useDynamicEventHistory";
 import { useDynamicReadContract } from "~~/core/dynamic/hooks/useDynamicReadContract";
 import { useDynamicTargetNetwork } from "~~/core/dynamic/hooks/useDynamicTargetNetwork";
 import { useDynamicWriteContract } from "~~/core/dynamic/hooks/useDynamicWriteContract";
 import { useGlobalState } from "~~/core/dynamic/services/store/global";
-import { useScaffoldEventHistory } from "~~/core/eth/hooks";
 
 const Home = () => {
   const currentChain = useGlobalState(state => state.currentChain);
   const { address } = useDynamicAccount();
   const { targetNetwork } = useDynamicTargetNetwork({ currentChain: currentChain });
   const [greetingState, setGreetingState] = useState("");
+  const {
+    data: contractData,
+    isLoading: contractLoading,
+    error: contractError,
+  } = useDynamicContract({ contractName: "YourContract", currentChain: currentChain });
+  const {
+    data: deployedContractInfo,
+    isLoading: deployedContractLoading,
+    error: deployedContractError,
+  } = useDynamicDeployContract({ contractName: "YourContract", currentChain: currentChain });
+  const {
+    data: eventHistoryData,
+    isLoading: eventHistoryLoading,
+    error: eventHistoryError,
+  } = useDynamicEventHistory({
+    contractName: "YourContract",
+    eventName: "contracts::YourContract::YourContract::GreetingChanged",
+    fromBlock: 1n,
+    enabled: true,
+    watch: true,
+    currentChain: currentChain,
+  });
 
   const {
     isLoading: isGreetingLoading,
@@ -77,6 +100,26 @@ const Home = () => {
             <tr>
               <td className="font-bold max-w-[200px]">Network</td>
               <td className="text-left">{targetNetwork?.name}</td>
+            </tr>
+            <tr>
+              <td className="font-bold max-w-[200px]">Contract address</td>
+              <td>
+                {!contractError ? <div>{contractLoading ? "Loading..." : contractData?.address}</div> : contractError}
+              </td>
+            </tr>
+            <tr>
+              <td className="font-bold max-w-[200px]">Deployed contract info</td>
+              <td>
+                {!deployedContractError ? (
+                  <div>{deployedContractLoading ? "Loading..." : deployedContractInfo?.address}</div>
+                ) : (
+                  deployedContractError
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td className="font-bold max-w-[200px]">First Event history info block hash</td>
+              <td>{eventHistoryData && eventHistoryData[0]?.blockHash}</td>
             </tr>
           </tbody>
         </table>

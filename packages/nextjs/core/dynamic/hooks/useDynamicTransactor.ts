@@ -23,7 +23,7 @@ export const useDynamicTransactor = (): {
   ethereumTransactor: TransactionFuncEth;
   starknetTransactor: TransactionFuncStrk;
 } => {
-  const ethereumTransactor = useEthTransactor(localWalletClient);
+  const ethereumTransactor = useEthTransactor(localWalletClient || null);
   const starknetTransactor = useStrkTransactor();
 
   return {
