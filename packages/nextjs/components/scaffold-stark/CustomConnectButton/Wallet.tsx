@@ -19,34 +19,24 @@ const Wallet = ({
 
   return (
     <button
-      className={`flex gap-4 items-center text-neutral p-[.2rem] rounded-[4px] transition-all cursor-pointer ${
-        isDarkMode ? "hover:bg-[#385183] border-[#4f4ab7]" : "hover:bg-gradient-light hover:border-none"
-      } border pl-3 ${clicked ? "bg-ligth" : ""}`}
+      className="bg-modal-network network w-[145px] h-[145px]"
       onClick={e => {
         setClicked(true);
         handleConnectWallet(e, connector);
       }}
     >
-      <div className="h-[2.2rem] w-[2.2rem] rounded-[5px]">
+      <div>
         {isSvg ? (
           <div
-            className="h-full w-full object-cover rounded-[5px]"
             dangerouslySetInnerHTML={{
               __html: connector.icon.light ?? "",
             }}
           />
         ) : (
-          <Image
-            alt={connector.name}
-            loader={loader}
-            src={connector.icon.light!}
-            width={70}
-            height={70}
-            className="h-full w-full object-cover rounded-[5px]"
-          />
+          <Image alt={connector.name} loader={loader} src={connector.icon.light!} width={50} height={50} />
         )}
       </div>
-      <p className="flex-1 text-start">{connector.name}</p>
+      <p className="text-center">{connector.name}</p>
     </button>
   );
 };

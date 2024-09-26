@@ -25,7 +25,6 @@ export const NetworkOptions = ({ hidden = false }: NetworkOptionsProps) => {
               className="menu-item btn-sm !rounded-xl flex gap-3 py-3 whitespace-nowrap"
               type="button"
               onClick={() => {
-                console.log(allowedNetwork);
                 switchNetwork(allowedNetwork.network);
               }}
             >

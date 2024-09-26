@@ -9,6 +9,7 @@
 
 body {
   min-height: 100vh;
+  background: #090909;
 }
 
 h1,
@@ -21,6 +22,21 @@ h4 {
 
 p {
   margin: 0;
+}
+
+.content {
+  max-width: 1600px;
+}
+
+@media (max-width: 1600px) {
+  .content {
+    padding: 0 24px;
+  }
+}
+
+.header {
+  border-bottom: 1px solid #222131;
+  padding: 24px 0;
 }
 
 .btn {
@@ -42,4 +58,34 @@ p {
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;
+  height: 40px;
+}
+
+.bg-modal-network {
+  border-radius: 20px;
+  border: 1px solid #5b749d;
+  background: #14161d;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.active-network {
+  background: #363959;
+}
+
+.bg-network {
+  background: #1d1e29;
+}
+
+.network {
+  border-radius: 6px;
+  padding: 22px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
 }

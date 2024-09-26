@@ -66,42 +66,29 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
     }
   }
 
+  const sortedConnectors = connectors.sort((a, b) => {
+    if (a.name.includes("Argent") && !b.name.includes("Argent")) {
+      return -1;
+    }
+    if (b.name.includes("Argent") && !a.name.includes("Argent")) {
+      return 1;
+    }
+    if (a.name.includes("Braavos") && !b.name.includes("Braavos")) {
+      return -1;
+    }
+    if (b.name.includes("Braavos") && !a.name.includes("Braavos")) {
+      return 1;
+    }
+    return 0;
+  });
+
   return (
-    <GenericModal
-      isOpen={isOpen}
-      onClose={closeModal}
-      animate={animate}
-      className={`${
-        isBurnerWallet ? "w-full" : "w-[300px] h-[430px]"
-      } mx-auto md:max-h-[30rem] md:max-w-[25rem] backdrop-blur`}
-    >
-      <div className="flex p-4 w-full lg:p-0 lg:grid-cols-5">
-        <div className="basis-5/6 lg:col-span-2 lg:py-4 lg:pl-8 flex justify-center items-center">
-          <h2 className="text-center my-4 lg:text-start text-neutral text-[1.125em]">
-            {isBurnerWallet ? "Choose account" : "Connect a Wallet"}
-          </h2>
-        </div>
-        <div className="ml-auto lg:col-span-3 lg:py-4 lg:pr-8 text-base-100 flex justify-center items-center">
-          <button
-            onClick={e => {
-              closeModal(e);
-              e.stopPropagation();
-            }}
-            className="w-8 h-8 grid place-content-center rounded-full text-neutral"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-col flex-1 lg:grid">
-        <div className="flex flex-col gap-4 w-full px-8 py-10">
+    <GenericModal isOpen={isOpen} onClose={closeModal} animate={animate} className={`mx-auto bg-modal-network`}>
+      <h2 className="text-white text-[24px]">{isBurnerWallet ? "Choose account" : "Connect Wallet"}</h2>
+      <div>
+        <div className="flex items-center gap-3 flex-wrap">
           {!isBurnerWallet ? (
-            connectors.map((connector, index) => (
+            sortedConnectors.map((connector, index) => (
               <Wallet
                 key={connector.id || index}
                 connector={connector}
@@ -110,14 +97,14 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
               />
             ))
           ) : (
-            <div className="flex flex-col pb-[20px] justify-end gap-3">
-              <div className="h-[300px] overflow-y-auto flex w-full flex-col gap-2">
+            <div className="flex flex-col gap-3">
+              <div className="overflow-y-auto flex w-full flex-col gap-2">
                 {burnerAccounts.map((burnerAcc, ix) => (
                   <div key={burnerAcc.publicKey} className="w-full flex flex-col">
                     <button
-                      className={`hover:bg-gradient-modal border rounded-md text-neutral py-[8px] pl-[10px] pr-16 flex items-center gap-4 ${
+                      className={`hover:bg-gradient-modal border rounded-md text-neutral flex items-center gap-4 ${
                         isDarkMode ? "border-[#385183]" : ""
-                      }`}
+                      } px-3 py-2`}
                       onClick={e => handleConnectBurner(e, ix)}
                     >
                       <BlockieAvatar address={burnerAcc.accountAddress} size={35} />

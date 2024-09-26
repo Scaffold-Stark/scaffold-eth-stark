@@ -19,8 +19,6 @@ export function useTargetNetwork(): { targetNetwork: ChainWithAttributes } {
     if (newSelectedNetwork && newSelectedNetwork.id !== targetNetwork.id) {
       setTargetNetwork(newSelectedNetwork);
     }
-
-    console.log(targetNetwork);
   }, [chainId, setTargetNetwork, targetNetwork.id]);
 
   return {

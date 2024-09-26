@@ -106,8 +106,8 @@ const Home = () => {
   }, [greeting]);
 
   return (
-    <div>
-      <h1 className="text-black text-3xl text-center mt-10">Starknet and EVM chains playground</h1>
+    <div className="text-white">
+      <h1 className="text-3xl text-center mt-10">Starknet and EVM chains playground</h1>
       <div className="w-[80%] mx-auto flex justify-center items-center flex-col">
         <table className="mt-5 w-[60%] mx-auto text-left">
           <tbody>
@@ -155,7 +155,7 @@ const Home = () => {
         {/* input for greeting */}
 
         <input
-          className="mt-5 input input-bordered w-fit"
+          className="mt-5 input input-bordered w-fit text-black"
           type="text"
           value={greetingState}
           onChange={handleGreetingChange}
@@ -163,7 +163,10 @@ const Home = () => {
         {greetingPending ? (
           <div>Loading...</div>
         ) : (
-          <div className="mt-3 bg-green-100 rounded-full w-fit px-5 py-1 cursor-pointer" onClick={handleClick}>
+          <div
+            className="mt-3 bg-green-100 text-black rounded-full w-fit px-5 py-1 cursor-pointer"
+            onClick={handleClick}
+          >
             Click me to change greeting
           </div>
         )}
