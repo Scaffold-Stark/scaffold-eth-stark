@@ -1,0 +1,7 @@
+[submodule "packages/scaffold-eth-2"]
+	path = packages/scaffold-eth-2
+	url = https://github.com/scaffold-eth/scaffold-eth-2/tree/foundry
+	branch = foundry
+[submodule "packages/scaffold-stark-2"]
+	path = packages/scaffold-stark-2
+	url = https://github.com/Scaffold-Stark/scaffold-stark-2

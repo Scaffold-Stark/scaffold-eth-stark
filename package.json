@@ -1,0 +1,55 @@
+{
+  "name": "ses",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "chain:eth": "yarn workspace @se-2/foundry chain",
+    "chain:stark": "yarn workspace @ss-2/snfoundry chain",
+    "deploy": "yarn workspace @se-2/foundry deploy && yarn workspace @ss-2/snfoundry deploy",
+    "deploy:reset:strk": "yarn workspace @sse-2/snfoundry  deploy:reset",
+    "test:strk": "yarn workspace @sse-2/snfoundry test",
+    "compile:strk": "yarn workspace @sse-2/snfoundry compile",
+    "format:strk": "yarn workspace @sse-2/snfoundry format",
+    "account:eth": "yarn workspace @sse-2/foundry account",
+    "compile:eth": "yarn workspace @sse-2/foundry compile",
+    "deploy:verify:eth": "yarn workspace @sse-2/foundry deploy:verify",
+    "flatten:eth": "yarn workspace @sse-2/foundry flatten",
+    "fork:eth": "yarn workspace @sse-2/foundry fork",
+    "foundry:format:eth": "yarn workspace @sse-2/foundry format",
+    "foundry:lint:eth": "yarn workspace @sse-2/foundry lint",
+    "foundry:test:eth": "yarn workspace @sse-2/foundry test",
+    "generate:eth": "yarn workspace @sse-2/foundry generate",
+    "verify:eth": "yarn workspace @sse-2/foundry verify",
+    "postinstall": "husky install",
+    "next:build": "yarn workspace @sse-2/nextjs build",
+    "next:check-types": "yarn workspace @sse-2/nextjs check-types",
+    "next:format": "yarn workspace @sse-2/nextjs format",
+    "next:lint": "yarn workspace @sse-2/nextjs lint",
+    "next:serve": "yarn workspace @sse-2/nextjs serve",
+    "precommit": "lint-staged",
+    "start": "yarn workspace @sse-2/nextjs dev",
+    "vercel": "yarn workspace @sse-2/nextjs vercel",
+    "vercel:yolo": "yarn workspace @sse-2/nextjs vercel:yolo",
+    "test": "yarn foundry:test:eth && test:strk",
+    "format": "yarn next:format && yarn foundry:format:eth && format:strk"
+  },
+  "devDependencies": {
+    "daisyui": "^4.7.3",
+    "husky": "~8.0.3",
+    "lint-staged": "~13.2.2",
+    "pinst": "^3.0.0",
+    "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "postcss": "^8.4.38"
+  },
+  "packageManager": "yarn@3.2.3",
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}
