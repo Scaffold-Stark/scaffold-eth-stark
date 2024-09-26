@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import useScaffoldEthBalance from "@scaffold-stark-2/hooks/scaffold-stark/useScaffoldEthBalance";
+import useScaffoldStrkBalance from "@scaffold-stark-2/hooks/scaffold-stark/useScaffoldStrkBalance";
+import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
+import { useGlobalState } from "@scaffold-stark-2/services/store/store";
 import { Address } from "@starknet-react/chains";
-import useScaffoldEthBalance from "~~/core/stark/hooks/useScaffoldEthBalance";
-import useScaffoldStrkBalance from "~~/core/stark/hooks/useScaffoldStrkBalance";
-import { useTargetNetwork } from "~~/core/stark/hooks/useTargetNetwork";
-import { useGlobalState } from "~~/core/stark/services/store/store-strk";
 
 type BalanceProps = {
   address?: Address;
@@ -82,7 +82,7 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
             </div>
           ) : (
             <>
-              <div className="flex gap-4">
+              <div className="text-gray-500 flex gap-4">
                 <div className="flex">
                   <span>{parseFloat(formatted).toFixed(4)}</span>
                   <span className="text-[0.8em] font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>

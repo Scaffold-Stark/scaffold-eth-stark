@@ -1,10 +1,10 @@
 "use client";
 
+import { useDisplayUsdMode } from "@scaffold-eth-2/hooks/scaffold-eth/useDisplayUsdMode";
+import { useTargetNetwork } from "@scaffold-eth-2/hooks/scaffold-eth/useTargetNetwork";
+import { useWatchBalance } from "@scaffold-eth-2/hooks/scaffold-eth/useWatchBalance";
+import { useGlobalState } from "@scaffold-eth-2/services/store/store";
 import { Address, formatEther } from "viem";
-import { useDisplayUsdMode } from "~~/core/eth/hooks/useDisplayUsdMode";
-import { useTargetNetwork } from "~~/core/eth/hooks/useTargetNetwork";
-import { useWatchBalance } from "~~/core/eth/hooks/useWatchBalance";
-import { useGlobalState } from "~~/core/eth/services/store/store-eth";
 
 type BalanceProps = {
   address?: Address;
@@ -53,13 +53,13 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
 
   return (
     <button
-      className={`btn btn-sm btn-ghost flex flex-col font-normal items-center hover:bg-transparent ${className}`}
+      className={`text-gray-500  btn btn-sm btn-ghost flex flex-col font-normal items-center hover:bg-transparent ${className}`}
       onClick={toggleDisplayUsdMode}
     >
       <div className="w-full flex items-center justify-center">
         {displayUsdMode ? (
           <>
-            <span className="text-[0.8em] font-bold mr-1">$</span>
+            <span className=" text-[0.8em] font-bold mr-1">$</span>
             <span>{(formattedBalance * nativeCurrencyPrice).toFixed(2)}</span>
           </>
         ) : (

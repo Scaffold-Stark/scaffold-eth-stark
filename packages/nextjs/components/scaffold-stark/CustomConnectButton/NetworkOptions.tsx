@@ -1,8 +1,8 @@
+import { getNetworkColor, useSwitchNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/";
+import { getTargetNetworks } from "@scaffold-stark-2/utils/scaffold-stark";
 import { useAccount } from "@starknet-react/core";
 import { useTheme } from "next-themes";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
-import { getNetworkColor, useSwitchNetwork } from "~~/core/stark/hooks/";
-import { getTargetNetworks } from "~~/core/stark/utils/scaffold-stark";
 
 type NetworkOptionsProps = {
   hidden?: boolean;

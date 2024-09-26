@@ -1,15 +1,17 @@
 "use client";
 
 // @refresh reset
+import Image from "next/image";
+import WalletIcon from "../../../public/icons/connect-wallet-icon.svg";
 import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useNetworkColor } from "@scaffold-eth-2/hooks/scaffold-eth/useNetworkColor";
+import { useTargetNetwork } from "@scaffold-eth-2/hooks/scaffold-eth/useTargetNetwork";
+import { getBlockExplorerAddressLink } from "@scaffold-eth-2/utils/scaffold-eth";
 import { Address } from "viem";
-import { useNetworkColor } from "~~/core/eth/hooks/useNetworkColor";
-import { useTargetNetwork } from "~~/core/eth/hooks/useTargetNetwork";
-import { getBlockExplorerAddressLink } from "~~/core/eth/utils/scaffold-eth";
 
 /**
  * Custom Wagmi Connect Button (watch balance + custom design)
@@ -31,9 +33,10 @@ export const RainbowKitCustomConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <button className="btn btn-primary btn-sm" onClick={openConnectModal} type="button">
-                    Connect Wallet
-                  </button>
+                  <div className="btn-connect-wallet" onClick={openConnectModal}>
+                    <p>Connect</p>
+                    <Image src={WalletIcon} alt="wallet-icon" height={15} width={15} />
+                  </div>
                 );
               }
 

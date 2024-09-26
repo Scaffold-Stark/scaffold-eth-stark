@@ -1,9 +1,6 @@
 import { NetworkOptions } from "./NetworkOptions";
-import {
-  ArrowLeftEndOnRectangleIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/24/outline";
 import { useDisconnect } from "@starknet-react/core";
+import { ArrowLeftEndOnRectangleIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export const WrongNetworkDropdown = () => {
   const { disconnect } = useDisconnect();
@@ -12,7 +9,10 @@ export const WrongNetworkDropdown = () => {
     <div className="dropdown dropdown-end mr-2">
       <label
         tabIndex={0}
-        className="btn btn-error btn-sm dropdown-toggle gap-1"
+        className="btn-connect-wallet dropdown-toggle gap-1"
+        style={{
+          background: "#ff8863",
+        }}
       >
         <span>Wrong network</span>
         <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />

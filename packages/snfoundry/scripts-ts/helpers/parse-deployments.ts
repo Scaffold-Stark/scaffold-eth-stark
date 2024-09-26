@@ -3,7 +3,7 @@ import path from "path";
 import prettier from "prettier";
 import { Abi, CompiledSierra } from "starknet";
 
-const TARGET_DIR = path.join(__dirname, "../../../nextjs/core/stark/contracts");
+const TARGET_DIR = path.join(__dirname, "../../../nextjs/lib/scaffold-stark-2/contracts");
 const deploymentsDir = path.join(__dirname, "../../deployments");
 const files = fs.readdirSync(deploymentsDir);
 

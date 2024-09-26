@@ -1,5 +1,8 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
+import { BlockieAvatar, isENS } from "@scaffold-eth-2/components/scaffold-eth";
+import { useOutsideClick } from "@scaffold-eth-2/hooks/scaffold-eth/useOutsideClick";
+import { getTargetNetworks } from "@scaffold-eth-2/utils/scaffold-eth";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { getAddress } from "viem";
 import { Address } from "viem";
@@ -13,9 +16,6 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
-import { BlockieAvatar, isENS } from "~~/components/scaffold-eth";
-import { useOutsideClick } from "~~/core/eth/hooks/useOutsideClick";
-import { getTargetNetworks } from "~~/core/eth/utils/scaffold-eth";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -48,12 +48,12 @@ export const AddressInfoDropdown = ({
   return (
     <>
       <details ref={dropdownRef} className="dropdown dropdown-end leading-3">
-        <summary tabIndex={0} className="btn btn-secondary btn-sm pl-0 pr-2 shadow-md dropdown-toggle gap-0 !h-auto">
-          <BlockieAvatar address={checkSumAddress} size={30} ensImage={ensAvatar} />
-          <span className="ml-2 mr-1">
+        <summary tabIndex={0} className="btn-connect-wallet">
+          <BlockieAvatar address={checkSumAddress} size={15} ensImage={ensAvatar} />
+          <span>
             {isENS(displayName) ? displayName : checkSumAddress?.slice(0, 6) + "..." + checkSumAddress?.slice(-4)}
           </span>
-          <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
+          <ChevronDownIcon className="h-6 w-4" />
         </summary>
         <ul
           tabIndex={0}
