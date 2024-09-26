@@ -1,19 +1,31 @@
 import { useMemo } from "react";
+import { GlobalState, useGlobalState } from "../services/store/global";
 import { ChainType } from "../types/chains";
 import { useScaffoldContract as useEthScaffoldContract } from "@scaffold-eth-2/hooks/scaffold-eth";
 import { ContractName as ContractNameEth } from "@scaffold-eth-2/utils/scaffold-eth/contract";
 import { useScaffoldContract as useStrkScaffoldContract } from "@scaffold-stark-2/hooks/scaffold-stark/useScaffoldContract";
 import { ContractName as ContractNameStrk } from "@scaffold-stark-2/utils/scaffold-stark/contract";
+import { GetWalletClientReturnType } from "wagmi/actions";
 
 export function useDynamicContract<
   TContractNameEth extends ContractNameEth,
   TContractNameStrk extends ContractNameStrk,
->({ contractName, currentChain }: { contractName: TContractNameEth | TContractNameStrk; currentChain: string }) {
+  TWalletClient extends Exclude<GetWalletClientReturnType, null> | undefined,
+>({
+  eth,
+  strk,
+}: {
+  eth: { contractName: TContractNameEth; walletClient?: TWalletClient | null };
+  strk: { contractName: TContractNameStrk };
+}) {
+  const currentChain = useGlobalState((state: GlobalState) => state.currentChain);
+
   const { data: ethData, isLoading: loadingEth } = useEthScaffoldContract({
-    contractName: contractName as TContractNameEth,
+    contractName: eth.contractName,
+    walletClient: eth.walletClient,
   });
   const { data: strkData, isLoading: loadingStrk } = useStrkScaffoldContract({
-    contractName: contractName as TContractNameStrk,
+    contractName: strk.contractName,
   });
 
   const result = useMemo(() => {

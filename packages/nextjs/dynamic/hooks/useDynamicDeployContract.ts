@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { GlobalState, useGlobalState } from "../services/store/global";
 import { ChainType } from "../types/chains";
 import { useDeployedContractInfo as useEthDeployedContractInfo } from "@scaffold-eth-2/hooks/scaffold-eth";
 import { ContractName as ContractNameEth } from "@scaffold-eth-2/utils/scaffold-eth/contract";
@@ -8,9 +9,11 @@ import { ContractName as ContractNameStrk } from "@scaffold-stark-2/utils/scaffo
 export function useDynamicDeployContract<
   TContractNameEth extends ContractNameEth,
   TContractNameStrk extends ContractNameStrk,
->({ currentChain, contractName }: { currentChain: string; contractName: TContractNameEth | TContractNameStrk }) {
-  const { data: ethDeploy, isLoading: isEthLoading } = useEthDeployedContractInfo(contractName as TContractNameEth);
-  const { data: strkDeploy, isLoading: isStrkLoading } = useStrkDeployedContractInfo(contractName as TContractNameStrk);
+>({ eth, strk }: { eth: { contractName: TContractNameEth }; strk: { contractName: TContractNameStrk } }) {
+  const currentChain = useGlobalState((state: GlobalState) => state.currentChain);
+
+  const { data: ethDeploy, isLoading: isEthLoading } = useEthDeployedContractInfo(eth.contractName);
+  const { data: strkDeploy, isLoading: isStrkLoading } = useStrkDeployedContractInfo(strk.contractName);
 
   const result = useMemo(() => {
     let data = null;

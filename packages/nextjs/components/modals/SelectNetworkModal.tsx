@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import EthNetwork from "../../public/icons/eth-network-icon.svg";
 import StrkNetwork from "../../public/icons/strk-network-icon.svg";
-import "./modals.css";
+import GenericModal from "../scaffold-stark/CustomConnectButton/GenericModal";
 import { useLocalStorage } from "usehooks-ts";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
@@ -22,39 +22,29 @@ const ArrowDownIcon = ({ color }: { color: string }) => {
 
 export default function SelectNetWorkModal() {
   const [open, setOpen] = useState<boolean>(false);
+  const [animate, setAnimate] = useState(false);
   const [activeNetwork, setActiveNetwork] = useState<string>("");
-  const modalRef = useRef<HTMLDivElement | null>(null);
-
   const currentChain = useGlobalState(state => state.currentChain);
-
   const setCurrentChain = useGlobalState(state => state.setCurrentChain);
-
   const [_, setLastSelectedChain] = useLocalStorage<string>("lastSelectedChain", "");
+
+  const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setAnimate(false);
+    setTimeout(() => {
+      setOpen(false);
+    }, 400);
+  };
 
   useEffect(() => {
     setActiveNetwork(currentChain);
   }, [currentChain]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
+  useEffect(() => setAnimate(open), [open]);
 
   return (
     <>
       <div
-        className="flex items-center justify-between cursor-pointer rounded bg-[#1C1F28] py-1 px-4 h-[37px] w-[80px]"
+        className="flex items-center justify-between cursor-pointer rounded bg-[#1C1F28] py-1 px-4 h-[40px] w-[80px]"
         onClick={() => setOpen(true)}
       >
         <Image
@@ -68,38 +58,39 @@ export default function SelectNetWorkModal() {
         <ArrowDownIcon color="#676F8E" />
       </div>
 
-      {open && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div ref={modalRef} className="bg-modal-network w-fit p-6 rounded-lg">
-            <p className="text-2xl font-bold text-white">Connect Network</p>
-            <p className="text-sm text-white">Choose your network to connect wallet</p>
-            <div className="flex items-center gap-4 mt-4">
-              <div
-                onClick={() => {
-                  setActiveNetwork(ChainType.Ethereum);
-                  setLastSelectedChain(ChainType.Ethereum);
-                  setCurrentChain(ChainType.Ethereum);
-                }}
-                className={`network  ${activeNetwork === ChainType.Ethereum ? "active-network" : "bg-network"}`}
-              >
-                <Image src={EthNetwork} alt="Ethereum Network" loading="lazy" width={50} height={50} />
-                <p className="uppercase mt-2">Ethereum</p>
-              </div>
-              <div
-                onClick={() => {
-                  setActiveNetwork(ChainType.Starknet);
-                  setLastSelectedChain(ChainType.Starknet);
-                  setCurrentChain(ChainType.Starknet);
-                }}
-                className={`network ${activeNetwork === ChainType.Starknet ? "active-network" : "bg-network"}`}
-              >
-                <Image src={StrkNetwork} alt="StarkNet Network" loading="lazy" width={50} height={50} />
-                <p className="uppercase mt-2">StarkNet</p>
-              </div>
-            </div>
+      <GenericModal
+        isOpen={open}
+        animate={animate}
+        onClose={closeModal}
+        className="bg-modal-network w-fit p-6 rounded-lg"
+      >
+        <p className="text-2xl font-bold text-white">Connect Network</p>
+        <p className="text-sm text-white">Choose your network to connect wallet</p>
+        <div className="flex items-center gap-4 mt-4">
+          <div
+            onClick={() => {
+              setActiveNetwork(ChainType.Ethereum);
+              setLastSelectedChain(ChainType.Ethereum);
+              setCurrentChain(ChainType.Ethereum);
+            }}
+            className={`network  ${activeNetwork === ChainType.Ethereum ? "active-network" : "bg-network"}`}
+          >
+            <Image src={EthNetwork} alt="Ethereum Network" loading="lazy" width={50} height={50} />
+            <p className="uppercase mt-2">Ethereum</p>
+          </div>
+          <div
+            onClick={() => {
+              setActiveNetwork(ChainType.Starknet);
+              setLastSelectedChain(ChainType.Starknet);
+              setCurrentChain(ChainType.Starknet);
+            }}
+            className={`network ${activeNetwork === ChainType.Starknet ? "active-network" : "bg-network"}`}
+          >
+            <Image src={StrkNetwork} alt="StarkNet Network" loading="lazy" width={50} height={50} />
+            <p className="uppercase mt-2">StarkNet</p>
           </div>
         </div>
-      )}
+      </GenericModal>
     </>
   );
 }

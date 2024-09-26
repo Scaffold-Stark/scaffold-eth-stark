@@ -1,10 +1,5 @@
 import { useState } from "react";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { MutateOptions } from "@tanstack/react-query";
-import { Abi, ExtractAbiFunctionNames } from "abitype";
-import { Config, UseWriteContractParameters, useAccount, useWriteContract } from "wagmi";
-import { WriteContractErrorType, WriteContractReturnType } from "wagmi/actions";
-import { WriteContractVariables } from "wagmi/query";
 import { useDeployedContractInfo, useTransactor } from "@scaffold-eth-2/hooks/scaffold-eth";
 import { notification } from "@scaffold-eth-2/utils/scaffold-eth";
 import {
@@ -13,6 +8,11 @@ import {
   ScaffoldWriteContractOptions,
   ScaffoldWriteContractVariables,
 } from "@scaffold-eth-2/utils/scaffold-eth/contract";
+import { MutateOptions } from "@tanstack/react-query";
+import { Abi, ExtractAbiFunctionNames } from "abitype";
+import { Config, UseWriteContractParameters, useAccount, useWriteContract } from "wagmi";
+import { WriteContractErrorType, WriteContractReturnType } from "wagmi/actions";
+import { WriteContractVariables } from "wagmi/query";
 
 /**
  * Wrapper around wagmi's useWriteContract hook which automatically loads (by name) the contract ABI and address from

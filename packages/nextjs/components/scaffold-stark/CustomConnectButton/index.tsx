@@ -4,11 +4,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import WalletIcon from "../../../public/icons/connect-wallet-icon.svg";
+import { Balance } from "../Balance";
 import { AddressInfoDropdown } from "./AddressInfoDropdown";
 import { AddressQRCodeModal } from "./AddressQRCodeModal";
 import ConnectModal from "./ConnectModal";
 import { WrongNetworkDropdown } from "./WrongNetworkDropdown";
-import { Balance } from "@scaffold-stark-2/components/scaffold-stark/Balance";
 import { useAutoConnect, useNetworkColor } from "@scaffold-stark-2/hooks/scaffold-stark";
 import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
 import { getBlockExplorerAddressLink } from "@scaffold-stark-2/utils/scaffold-stark";
