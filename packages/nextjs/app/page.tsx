@@ -1,14 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { parseEther } from "viem";
 import { useDynamicAccount } from "~~/core/dynamic/hooks/useDynamicAccount";
 import { useDynamicContract } from "~~/core/dynamic/hooks/useDynamicContract";
 import { useDynamicDeployContract } from "~~/core/dynamic/hooks/useDynamicDeployContract";
 import { useDynamicEventHistory } from "~~/core/dynamic/hooks/useDynamicEventHistory";
 import { useDynamicReadContract } from "~~/core/dynamic/hooks/useDynamicReadContract";
 import { useDynamicTargetNetwork } from "~~/core/dynamic/hooks/useDynamicTargetNetwork";
+import { useDynamicTransactor } from "~~/core/dynamic/hooks/useDynamicTransactor";
 import { useDynamicWriteContract } from "~~/core/dynamic/hooks/useDynamicWriteContract";
 import { useGlobalState } from "~~/core/dynamic/services/store/global";
+import { ChainType } from "~~/core/dynamic/types/chains";
 
 const Home = () => {
   const currentChain = useGlobalState(state => state.currentChain);
@@ -25,11 +28,7 @@ const Home = () => {
     isLoading: deployedContractLoading,
     error: deployedContractError,
   } = useDynamicDeployContract({ contractName: "YourContract", currentChain: currentChain });
-  const {
-    data: eventHistoryData,
-    isLoading: eventHistoryLoading,
-    error: eventHistoryError,
-  } = useDynamicEventHistory({
+  const { data: eventHistoryData } = useDynamicEventHistory({
     contractName: "YourContract",
     eventName: "contracts::YourContract::YourContract::GreetingChanged",
     fromBlock: 1n,
@@ -37,7 +36,6 @@ const Home = () => {
     watch: true,
     currentChain: currentChain,
   });
-
   const {
     isLoading: isGreetingLoading,
     data: greeting,
@@ -46,6 +44,34 @@ const Home = () => {
     strk: { contractName: "YourContract", functionName: "greeting", args: [] },
     eth: { contractName: "YourContract", functionName: "greeting", args: [] },
   });
+
+  const { ethereumTransactor, starknetTransactor } = useDynamicTransactor();
+
+  const handleTransaction = async () => {
+    if (currentChain === ChainType.Ethereum) {
+      try {
+        const txHash = await ethereumTransactor({
+          to: address,
+          account: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          value: parseEther("1"),
+        });
+        console.log("Ethereum Transaction Hash:", txHash);
+      } catch (err) {
+        console.error("Ethereum transaction failed:", err);
+      }
+    } else if (currentChain === ChainType.Starknet) {
+      try {
+        const txHash = await starknetTransactor(() => {
+          return Promise.resolve("Your StarkNet Transaction Hash");
+        });
+        console.log("Starknet Transaction Hash:", txHash);
+      } catch (error) {
+        console.error("Starknet transaction failed:", error);
+      }
+    } else {
+      console.log(`Do not support your network : ${currentChain}`);
+    }
+  };
 
   const { writeAsync, isPending: greetingPending } = useDynamicWriteContract({
     strk: {
@@ -123,6 +149,7 @@ const Home = () => {
             </tr>
           </tbody>
         </table>
+        <button onClick={handleTransaction} className="mt-5 rounded-full bg-slate-500 px-4 py-2 text-white">Transaction Dynamic Hook</button>
         {/* input for greeting */}
 
         <input
