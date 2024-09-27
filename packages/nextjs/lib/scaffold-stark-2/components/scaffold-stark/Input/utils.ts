@@ -13,12 +13,7 @@ export const isValidInteger = (dataType: string, value: string | bigint) => {
   const isSigned = dataType.split("::").pop()!.startsWith("i");
   const bitcount = Number(dataType.substring(isSigned ? 3 : 4));
 
-  if (
-    typeof value === "string" &&
-    !(isSigned
-      ? SIGNED_NUMBER_REGEX.test(value)
-      : UNSIGNED_NUMBER_REGEX.test(value))
-  ) {
+  if (typeof value === "string" && !(isSigned ? SIGNED_NUMBER_REGEX.test(value) : UNSIGNED_NUMBER_REGEX.test(value))) {
     return false;
   }
 

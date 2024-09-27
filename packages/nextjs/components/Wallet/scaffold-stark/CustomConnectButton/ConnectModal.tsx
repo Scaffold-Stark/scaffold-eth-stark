@@ -82,8 +82,17 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
     return 0;
   });
   return (
-    <GenericModal isOpen={isOpen} onClose={closeModal} animate={animate} className={`mx-auto bg-modal-network`}>
-      <h2 className="text-white text-[24px]">{isBurnerWallet ? "Choose account" : "Connect Wallet"}</h2>
+    <GenericModal
+      isOpen={isOpen}
+      onClose={closeModal}
+      animate={animate}
+      className={`mx-auto border border-gray-600 p-[30px] bg-[#14161d]`}
+    >
+      {isBurnerWallet ? (
+        <h2 className="text-white text-[24px] text-center">Choose account</h2>
+      ) : (
+        <h2 className="text-white text-[24px] text-left mb-5">Connect Wallet</h2>
+      )}
       <div>
         <div className="flex items-center gap-3 flex-wrap">
           {!isBurnerWallet ? (
@@ -96,17 +105,17 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
               />
             ))
           ) : (
-            <div className="flex flex-col gap-3">
-              <div className="overflow-y-auto flex w-full flex-col gap-2">
+            <div className="flex flex-col items-center justify-center gap-3 mx-8 pb-10 pt-8">
+              <div className="h-[300px] overflow-y-auto flex w-full flex-col gap-4">
                 {burnerAccounts.map((burnerAcc, ix) => (
                   <div key={burnerAcc.publicKey} className="w-full flex flex-col">
                     <button
-                      className={`hover:bg-gradient-modal border rounded-md text-neutral flex items-center gap-4 ${
-                        isDarkMode ? "border-[#385183]" : ""
-                      } px-3 py-2`}
+                      className={`text-white border border-gray-600 rounded-md  py-[8px] pl-[10px] pr-16 flex items-center gap-4 bg-[#14161d]
+                                  hover:text-black hover:bg-white
+                                  `}
                       onClick={e => handleConnectBurner(e, ix)}
                     >
-                      <BlockieAvatar address={burnerAcc.accountAddress} size={35} />
+                      <BlockieAvatar address={burnerAcc.accountAddress} size={35}></BlockieAvatar>
                       {`${burnerAcc.accountAddress.slice(0, 6)}...${burnerAcc.accountAddress.slice(-4)}`}
                     </button>
                   </div>

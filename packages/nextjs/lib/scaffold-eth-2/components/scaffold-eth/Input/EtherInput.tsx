@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
-import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 import { CommonInputProps, InputBase, SIGNED_NUMBER_REGEX } from "@scaffold-eth-2/components/scaffold-eth";
 import { useDisplayUsdMode } from "@scaffold-eth-2/hooks/scaffold-eth/useDisplayUsdMode";
 import { useGlobalState } from "@scaffold-eth-2/services/store/store";
+import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 
 const MAX_DECIMALS_USD = 2;
 

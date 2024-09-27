@@ -18,6 +18,8 @@ const Wallet = ({
   const { resolvedTheme } = useTheme();
   const isDarkMode = resolvedTheme === "dark";
 
+  console.log(connector);
+
   return (
     <button
       className="bg-modal-network network w-[145px] h-[145px]"

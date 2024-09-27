@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  FocusEvent,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import { ChangeEvent, FocusEvent, ReactNode, useCallback, useEffect, useRef } from "react";
 import { CommonInputProps } from "./utils";
 
 type InputBaseProps<T> = CommonInputProps<T> & {
@@ -15,9 +8,7 @@ type InputBaseProps<T> = CommonInputProps<T> & {
   reFocus?: boolean;
 };
 
-export const InputBase = <
-  T extends { toString: () => string } | undefined = string,
->({
+export const InputBase = <T extends { toString: () => string } | undefined = string>({
   name,
   value,
   onChange,
@@ -48,10 +39,7 @@ export const InputBase = <
   // at the end of the input. Example AddressInput
   const onFocus = (e: FocusEvent<HTMLInputElement, Element>) => {
     if (reFocus !== undefined) {
-      e.currentTarget.setSelectionRange(
-        e.currentTarget.value.length,
-        e.currentTarget.value.length,
-      );
+      e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length);
     }
   };
   useEffect(() => {

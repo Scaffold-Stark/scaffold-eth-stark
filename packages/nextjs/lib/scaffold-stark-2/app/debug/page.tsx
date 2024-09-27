@@ -1,11 +1,10 @@
 import { DebugContracts } from "./_components/DebugContracts";
-import type { NextPage } from "next";
 import { getMetadata } from "@scaffold-stark-2/utils/scaffold-stark/getMetadata";
+import type { NextPage } from "next";
 
 export const metadata = getMetadata({
   title: "Debug Contracts",
-  description:
-    "Debug your deployed 🏗 Scaffold-Stark 2 contracts in an easy way",
+  description: "Debug your deployed 🏗 Scaffold-Stark 2 contracts in an easy way",
 });
 
 const Debug: NextPage = () => {

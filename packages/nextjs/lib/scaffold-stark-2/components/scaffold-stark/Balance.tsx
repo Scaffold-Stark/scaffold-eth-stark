@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Address } from "@starknet-react/chains";
-import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
 import useScaffoldEthBalance from "@scaffold-stark-2/hooks/scaffold-stark/useScaffoldEthBalance";
-import { useGlobalState } from "@scaffold-stark-2/services/store/store";
 import useScaffoldStrkBalance from "@scaffold-stark-2/hooks/scaffold-stark/useScaffoldStrkBalance";
+import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
+import { useGlobalState } from "@scaffold-stark-2/services/store/store";
+import { Address } from "@starknet-react/chains";
 
 type BalanceProps = {
   address?: Address;
@@ -17,8 +17,8 @@ type BalanceProps = {
  * Display (ETH & USD) balance of an ETH address.
  */
 export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
-  const price = useGlobalState((state) => state.nativeCurrencyPrice);
-  const strkPrice = useGlobalState((state) => state.strkCurrencyPrice);
+  const price = useGlobalState(state => state.nativeCurrencyPrice);
+  const strkPrice = useGlobalState(state => state.strkCurrencyPrice);
   const { targetNetwork } = useTargetNetwork();
   const { formatted, isLoading, isError } = useScaffoldEthBalance({
     address,
@@ -31,23 +31,15 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
   } = useScaffoldStrkBalance({
     address,
   });
-  const [displayUsdMode, setDisplayUsdMode] = useState(
-    price > 0 ? Boolean(usdMode) : false,
-  );
+  const [displayUsdMode, setDisplayUsdMode] = useState(price > 0 ? Boolean(usdMode) : false);
 
   const toggleBalanceMode = () => {
     if (price > 0 || strkPrice > 0) {
-      setDisplayUsdMode((prevMode) => !prevMode);
+      setDisplayUsdMode(prevMode => !prevMode);
     }
   };
 
-  if (
-    !address ||
-    isLoading ||
-    formatted === null ||
-    strkIsLoading ||
-    strkFormatted === null
-  ) {
+  if (!address || isLoading || formatted === null || strkIsLoading || strkFormatted === null) {
     return (
       <div className="animate-pulse flex space-x-4">
         <div className="rounded-md bg-slate-300 h-6 w-6"></div>
@@ -60,9 +52,7 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
 
   if (isError) {
     return (
-      <div
-        className={`border-2 border-gray-400 rounded-md px-2 flex flex-col items-center max-w-fit cursor-pointer`}
-      >
+      <div className={`border-2 border-gray-400 rounded-md px-2 flex flex-col items-center max-w-fit cursor-pointer`}>
         <div className="text-warning">Error</div>
       </div>
     );
@@ -95,16 +85,12 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
               <div className="flex gap-4">
                 <div className="flex">
                   <span>{parseFloat(formatted).toFixed(4)}</span>
-                  <span className="text-[0.8em] font-bold ml-1">
-                    {targetNetwork.nativeCurrency.symbol}
-                  </span>
+                  <span className="text-[0.8em] font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>
                 </div>
 
                 <div className="flex">
                   <span>{parseFloat(strkFormatted).toFixed(4)}</span>
-                  <span className="text-[0.8em] font-bold ml-1">
-                    {strkSymbol}
-                  </span>
+                  <span className="text-[0.8em] font-bold ml-1">{strkSymbol}</span>
                 </div>
               </div>
             </>

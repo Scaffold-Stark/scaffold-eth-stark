@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { decodeTransactionData } from "@scaffold-eth-2/utils/scaffold-eth";
 import {
   Block,
   Hash,
@@ -10,7 +11,6 @@ import {
   webSocket,
 } from "viem";
 import { hardhat } from "viem/chains";
-import { decodeTransactionData } from "@scaffold-eth-2/utils/scaffold-eth";
 
 const BLOCKS_PER_PAGE = 20;
 

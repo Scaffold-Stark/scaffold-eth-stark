@@ -1,22 +1,18 @@
 "use client";
 
-import React, { useCallback, useRef, useState, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Bars3Icon,
-  BugAntIcon,
-  Cog8ToothIcon,
-} from "@heroicons/react/24/outline";
-import { useOutsideClick } from "@scaffold-stark-2/hooks/scaffold-stark";
+import { SwitchTheme } from "./SwitchTheme";
 import { CustomConnectButton } from "@scaffold-stark-2/components/scaffold-stark/CustomConnectButton";
-import { useTheme } from "next-themes";
+import { useOutsideClick } from "@scaffold-stark-2/hooks/scaffold-stark";
 import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
 import { devnet } from "@starknet-react/chains";
-import { SwitchTheme } from "./SwitchTheme";
 import { useAccount, useNetwork, useProvider } from "@starknet-react/core";
+import { useTheme } from "next-themes";
 import { BlockIdentifier } from "starknet";
+import { Bars3Icon, BugAntIcon, Cog8ToothIcon } from "@heroicons/react/24/outline";
 
 type HeaderMenuLink = {
   label: string;
@@ -59,9 +55,7 @@ export const HeaderMenuLinks = () => {
               href={href}
               passHref
               className={`${
-                isActive
-                  ? "!bg-gradient-nav !text-white active:bg-gradient-nav shadow-md"
-                  : ""
+                isActive ? "!bg-gradient-nav !text-white active:bg-gradient-nav shadow-md" : ""
               } py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col hover:bg-gradient-nav hover:text-white`}
             >
               {icon}
@@ -93,34 +87,21 @@ export const Header = () => {
   const [isDeployed, setIsDeployed] = useState(true);
 
   useEffect(() => {
-    if (
-      status === "connected" &&
-      address &&
-      chainId === targetNetwork.id &&
-      chain.network === targetNetwork.network
-    ) {
+    if (status === "connected" && address && chainId === targetNetwork.id && chain.network === targetNetwork.network) {
       provider
         .getClassHashAt(address)
-        .then((classHash) => {
+        .then(classHash => {
           if (classHash) setIsDeployed(true);
           else setIsDeployed(false);
         })
-        .catch((e) => {
+        .catch(e => {
           console.error("contreact cehc", e);
           if (e.toString().includes("Contract not found")) {
             setIsDeployed(false);
           }
         });
     }
-  }, [
-    status,
-    address,
-    provider,
-    chainId,
-    targetNetwork.id,
-    targetNetwork.network,
-    chain.network,
-  ]);
+  }, [status, address, provider, chainId, targetNetwork.id, targetNetwork.network, chain.network]);
 
   return (
     <div className="sticky lg:static top-0 navbar min-h-0 flex-shrink-0 justify-between z-20 px-0 sm:px-2">
@@ -128,11 +109,9 @@ export const Header = () => {
         <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <label
             tabIndex={0}
-            className={`ml-1 btn btn-ghost ${
-              isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"
-            }`}
+            className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
             onClick={() => {
-              setIsDrawerOpen((prevIsOpenState) => !prevIsOpenState);
+              setIsDrawerOpen(prevIsOpenState => !prevIsOpenState);
             }}
           >
             <Bars3Icon className="h-1/2" />
@@ -149,18 +128,9 @@ export const Header = () => {
             </ul>
           )}
         </div>
-        <Link
-          href="/"
-          passHref
-          className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0"
-        >
+        <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-10 h-10">
-            <Image
-              alt="SE2 logo"
-              className="cursor-pointer"
-              fill
-              src="/logo.svg"
-            />
+            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Scaffold-Stark</span>
@@ -173,17 +143,11 @@ export const Header = () => {
       </div>
       <div className="navbar-end flex-grow mr-4 gap-4">
         {status === "connected" && !isDeployed ? (
-          <span className="bg-[#8a45fc] text-[9px] p-1 text-white">
-            Wallet Not Deployed
-          </span>
+          <span className="bg-[#8a45fc] text-[9px] p-1 text-white">Wallet Not Deployed</span>
         ) : null}
         <CustomConnectButton />
         {/* <FaucetButton /> */}
-        <SwitchTheme
-          className={`pointer-events-auto ${
-            isLocalNetwork ? "self-end md:self-auto" : ""
-          }`}
-        />
+        <SwitchTheme className={`pointer-events-auto ${isLocalNetwork ? "self-end md:self-auto" : ""}`} />
       </div>
     </div>
   );

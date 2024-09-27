@@ -1,4 +1,4 @@
-import { Abi } from "abi-wan-kanabi";
+import { ReadOnlyFunctionForm } from "./ReadOnlyFunctionForm";
 import {
   AbiFunction,
   Contract,
@@ -7,26 +7,19 @@ import {
   InheritedFunctions,
   getFunctionsByStateMutability,
 } from "@scaffold-stark-2/utils/scaffold-stark/contract";
-import { ReadOnlyFunctionForm } from "./ReadOnlyFunctionForm";
+import { Abi } from "abi-wan-kanabi";
 
-export const ContractReadMethods = ({
-  deployedContractData,
-}: {
-  deployedContractData: Contract<ContractName>;
-}) => {
+export const ContractReadMethods = ({ deployedContractData }: { deployedContractData: Contract<ContractName> }) => {
   if (!deployedContractData) {
     return null;
   }
 
-  const functionsToDisplay = getFunctionsByStateMutability(
-    (deployedContractData.abi || []) as Abi,
-    "view",
-  )
-    .filter((fn) => {
+  const functionsToDisplay = getFunctionsByStateMutability((deployedContractData.abi || []) as Abi, "view")
+    .filter(fn => {
       const isQueryableWithParams = fn.inputs.length > 0;
       return isQueryableWithParams;
     })
-    .map((fn) => {
+    .map(fn => {
       return {
         fn,
       };

@@ -1,8 +1,5 @@
-import {
-  UseAccountResult,
-  useAccount as useStarknetReactAccount,
-} from "@starknet-react/core";
 import { useEffect, useState } from "react";
+import { UseAccountResult, useAccount as useStarknetReactAccount } from "@starknet-react/core";
 
 /**
  * Wrapper around starknet react's useAccount hook to address issues

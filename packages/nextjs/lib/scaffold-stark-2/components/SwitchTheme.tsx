@@ -25,9 +25,7 @@ export const SwitchTheme = ({ className }: { className?: string }) => {
   if (!mounted) return null;
 
   return (
-    <div
-      className={`flex space-x-2 h-5 items-center justify-center text-sm border-l border-neutral px-4 ${className}`}
-    >
+    <div className={`flex space-x-2 h-5 items-center justify-center text-sm border-l border-neutral px-4 ${className}`}>
       {
         <label
           htmlFor="theme-toggle"
