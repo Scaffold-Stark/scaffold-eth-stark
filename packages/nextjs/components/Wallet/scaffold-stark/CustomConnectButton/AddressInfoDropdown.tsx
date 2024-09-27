@@ -171,7 +171,7 @@ export const AddressInfoDropdown = ({
                       }}
                       className="border border-gray-600 rounded-lg shadow-lg relative w-full mx-auto md:max-h-[30rem] md:max-w-[25rem] bg-base-100 outline-none focus:outline-none"
                     >
-                      <div className="flex items-start justify-between p-4 pt-8 rounded-t">
+                      <div className="flex items-start justify-between px-4 pt-8 rounded-t">
                         <div className="flex justify-center items-center w-11/12">
                           <h2 className="text-lg text-center m-0 text-white">Choose Account</h2>
                         </div>

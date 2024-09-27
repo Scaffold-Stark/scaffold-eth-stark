@@ -86,9 +86,13 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
       isOpen={isOpen}
       onClose={closeModal}
       animate={animate}
-      className={`mx-auto border border-gray-600 p-5 bg-[#14161d]`}
+      className={`mx-auto border border-gray-600 p-[30px] bg-[#14161d]`}
     >
-      <h2 className="text-white text-[24px] text-center">{isBurnerWallet ? "Choose account" : "Connect Wallet"}</h2>
+      {isBurnerWallet ? (
+        <h2 className="text-white text-[24px] text-center">Choose account</h2>
+      ) : (
+        <h2 className="text-white text-[24px] text-left mb-5">Connect Wallet</h2>
+      )}
       <div>
         <div className="flex items-center gap-3 flex-wrap">
           {!isBurnerWallet ? (
