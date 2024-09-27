@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Address as AddressType, sepolia } from "@starknet-react/chains";
-import { BanknotesIcon } from "@heroicons/react/24/outline";
-import { useNetwork } from "@starknet-react/core";
-import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
-import { RpcProvider } from "starknet";
-import { notification } from "@scaffold-stark-2/utils/scaffold-stark";
 import Image from "next/image";
+import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
+import { notification } from "@scaffold-stark-2/utils/scaffold-stark";
+import { Address as AddressType, sepolia } from "@starknet-react/chains";
+import { useNetwork } from "@starknet-react/core";
+import { RpcProvider } from "starknet";
+import { BanknotesIcon } from "@heroicons/react/24/outline";
 
 /**
  * Faucet modal which displays external websites that lets you send small amounts of L2 Sepolia ETH/STRK to an account address on Starknet Sepolia..
@@ -51,25 +51,13 @@ export const FaucetSepolia = () => {
         console.error("⚡️ ~ file: Faucet.tsx:checkChain ~ error", error);
         notification.error(
           <>
-            <p className="font-bold mt-0 mb-1">
-              Cannot connect to local provider
-            </p>
+            <p className="font-bold mt-0 mb-1">Cannot connect to local provider</p>
             <p className="m-0">
-              - Did you forget to run{" "}
-              <code className="italic bg-base-300 text-base font-bold">
-                yarn chain
-              </code>{" "}
-              ?
+              - Did you forget to run <code className="italic bg-base-300 text-base font-bold">yarn chain</code> ?
             </p>
             <p className="mt-1 break-normal">
-              - Or you can change{" "}
-              <code className="italic bg-base-300 text-base font-bold">
-                targetNetwork
-              </code>{" "}
-              in{" "}
-              <code className="italic bg-base-300 text-base font-bold">
-                scaffold.config.ts
-              </code>
+              - Or you can change <code className="italic bg-base-300 text-base font-bold">targetNetwork</code> in{" "}
+              <code className="italic bg-base-300 text-base font-bold">scaffold.config.ts</code>
             </p>
           </>,
           {
@@ -89,10 +77,7 @@ export const FaucetSepolia = () => {
 
   return (
     <div>
-      <label
-        htmlFor="faucet-modal"
-        className="btn btn-sm font-normal gap-1 border border-[#32BAC4] shadow-none"
-      >
+      <label htmlFor="faucet-modal" className="btn btn-sm font-normal gap-1 border border-[#32BAC4] shadow-none">
         <BanknotesIcon className="h-4 w-4 text-[#32BAC4]" />
         <span>Faucet</span>
       </label>
@@ -104,14 +89,10 @@ export const FaucetSepolia = () => {
           <h3 className="text-xl font-bold mb-3">Sepolia Faucets</h3>
           <p className="text-xs mb-6">
             <span className="font-medium underline">Disclaimer:</span>
-            <br /> Please note that these external websites are provided for
-            your convenience. We do not have control over the content and
-            availability of these sites. Use at your own risk.
+            <br /> Please note that these external websites are provided for your convenience. We do not have control
+            over the content and availability of these sites. Use at your own risk.
           </p>
-          <label
-            htmlFor="faucet-modal"
-            className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3"
-          >
+          <label htmlFor="faucet-modal" className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3">
             ✕
           </label>
           <div className="mb-4">
@@ -125,12 +106,7 @@ export const FaucetSepolia = () => {
                     key={id}
                   >
                     <div className="flex relative w-6 h-6">
-                      <Image
-                        alt="Starknet Developers Hub"
-                        className="cursor-pointer"
-                        fill
-                        src={faucet.img}
-                      />
+                      <Image alt="Starknet Developers Hub" className="cursor-pointer" fill src={faucet.img} />
                     </div>
                     <p className="text-sm m-0">{faucet.name}</p>
                   </a>

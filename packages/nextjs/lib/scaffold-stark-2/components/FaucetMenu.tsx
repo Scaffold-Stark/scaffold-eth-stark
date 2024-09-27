@@ -1,6 +1,7 @@
 "use client";
-import { DropdownMenu, Button } from "@radix-ui/themes";
+
 import { CaretDownIcon } from "@radix-ui/react-icons";
+import { Button, DropdownMenu } from "@radix-ui/themes";
 
 export default function FaucetMenu() {
   return (

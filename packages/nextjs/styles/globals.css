@@ -7,6 +7,16 @@
   background: oklch(var(--b2));
 }
 
+* {
+  scrollbar-color: white #090909 !important;
+  scrollbar-width: thin !important;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: white #090909;
+}
+
 body {
   min-height: 100vh;
   background: #090909;
@@ -84,6 +94,6 @@ p {
   color: white;
 }
 
-.dropdown .dropdown-content{
+.dropdown .dropdown-content {
   z-index: 99;
 }

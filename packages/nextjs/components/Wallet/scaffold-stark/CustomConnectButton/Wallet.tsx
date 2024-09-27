@@ -18,8 +18,7 @@ const Wallet = ({
   const { resolvedTheme } = useTheme();
   const isDarkMode = resolvedTheme === "dark";
 
-
-  console.log(connector)
+  console.log(connector);
 
   return (
     <button

@@ -1,9 +1,9 @@
 "use client";
 
-import { Address as AddressType, sepolia } from "@starknet-react/chains";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { useNetwork } from "@starknet-react/core";
 import Image from "next/image";
+import { Address as AddressType, sepolia } from "@starknet-react/chains";
+import { useNetwork } from "@starknet-react/core";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export const BlockExplorerSepolia = () => {
   const { chain: ConnectedChain } = useNetwork();
@@ -40,15 +40,8 @@ export const BlockExplorerSepolia = () => {
         <MagnifyingGlassIcon className="h-4 w-4 text-[#32BAC4]" />
         <span>Block Explorer</span>
       </label>
-      <input
-        type="checkbox"
-        id="sepolia-blockexplorer-modal"
-        className="modal-toggle"
-      />
-      <label
-        htmlFor="sepolia-blockexplorer-modal"
-        className="modal cursor-pointer"
-      >
+      <input type="checkbox" id="sepolia-blockexplorer-modal" className="modal-toggle" />
+      <label htmlFor="sepolia-blockexplorer-modal" className="modal cursor-pointer">
         <label className="modal-box relative">
           {/* dummy input to capture event onclick on modal box */}
           <input className="h-0 w-0 absolute top-0 left-0" />
@@ -70,12 +63,7 @@ export const BlockExplorerSepolia = () => {
                     key={id}
                   >
                     <div className="flex relative w-6 h-6">
-                      <Image
-                        alt="Starknet Developers Hub"
-                        className="cursor-pointer"
-                        fill
-                        src={blockexplorer.img}
-                      />
+                      <Image alt="Starknet Developers Hub" className="cursor-pointer" fill src={blockexplorer.img} />
                     </div>
                     <p className="text-sm m-0">{blockexplorer.name}</p>
                   </a>

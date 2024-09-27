@@ -1,23 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { useInterval } from "usehooks-ts";
 import { useDeployedContractInfo } from "@scaffold-stark-2/hooks/scaffold-stark";
 import scaffoldConfig from "@scaffold-stark-2/scaffold.config";
 import { replacer } from "@scaffold-stark-2/utils/scaffold-stark/common";
 import {
-  Abi,
-  ExtractAbiEvent,
-  ExtractAbiEventNames,
-} from "abi-wan-kanabi/dist/kanabi";
-import {
   ContractAbi,
   ContractName,
-  parseParamWithType,
   UseScaffoldEventHistoryConfig,
+  parseParamWithType,
 } from "@scaffold-stark-2/utils/scaffold-stark/contract";
-import { devnet } from "@starknet-react/chains";
-import { useProvider } from "@starknet-react/core";
-import { hash, RpcProvider } from "starknet";
 import {
   isCairoBigInt,
   isCairoBool,
@@ -28,6 +19,11 @@ import {
   isCairoTuple,
   isCairoU256,
 } from "@scaffold-stark-2/utils/scaffold-stark/types";
+import { devnet } from "@starknet-react/chains";
+import { useProvider } from "@starknet-react/core";
+import { Abi, ExtractAbiEvent, ExtractAbiEventNames } from "abi-wan-kanabi/dist/kanabi";
+import { RpcProvider, hash } from "starknet";
+import { useInterval } from "usehooks-ts";
 
 /**
  * Reads events from a deployed contract
@@ -58,20 +54,13 @@ export const useScaffoldEventHistory = <
   receiptData,
   watch,
   enabled = true,
-}: UseScaffoldEventHistoryConfig<
-  TContractName,
-  TEventName,
-  TBlockData,
-  TTransactionData,
-  TReceiptData
->) => {
+}: UseScaffoldEventHistoryConfig<TContractName, TEventName, TBlockData, TTransactionData, TReceiptData>) => {
   const [events, setEvents] = useState<any[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>();
   const [fromBlockUpdated, setFromBlockUpdated] = useState<bigint>(fromBlock);
 
-  const { data: deployedContractData, isLoading: deployedContractLoading } =
-    useDeployedContractInfo(contractName);
+  const { data: deployedContractData, isLoading: deployedContractLoading } = useDeployedContractInfo(contractName);
   const { provider } = useProvider();
   const { targetNetwork } = useTargetNetwork();
 
@@ -93,22 +82,16 @@ export const useScaffoldEventHistory = <
       }
 
       const event = (deployedContractData.abi as Abi).find(
-        (part) => part.type === "event" && part.name === eventName,
+        part => part.type === "event" && part.name === eventName,
       ) as ExtractAbiEvent<ContractAbi<TContractName>, TEventName>;
 
-      const blockNumber = (await publicClient.getBlockLatestAccepted())
-        .block_number;
+      const blockNumber = (await publicClient.getBlockLatestAccepted()).block_number;
 
-      if (
-        (fromBlock && blockNumber >= fromBlock) ||
-        blockNumber >= fromBlockUpdated
-      ) {
+      if ((fromBlock && blockNumber >= fromBlock) || blockNumber >= fromBlockUpdated) {
         const logs = (
           await publicClient.getEvents({
             chunk_size: 100,
-            keys: [
-              [hash.getSelectorFromName(event.name.split("::").slice(-1)[0])],
-            ],
+            keys: [[hash.getSelectorFromName(event.name.split("::").slice(-1)[0])]],
             address: deployedContractData?.address,
             from_block: { block_number: Number(fromBlock || fromBlockUpdated) },
             to_block: { block_number: blockNumber },
@@ -126,15 +109,11 @@ export const useScaffoldEventHistory = <
                 : await publicClient.getBlockWithTxHashes(logs[i].block_hash),
             transaction:
               transactionData && logs[i].transaction_hash !== null
-                ? await publicClient.getTransactionByHash(
-                    logs[i].transaction_hash,
-                  )
+                ? await publicClient.getTransactionByHash(logs[i].transaction_hash)
                 : null,
             receipt:
               receiptData && logs[i].transaction_hash !== null
-                ? await publicClient.getTransactionReceipt(
-                    logs[i].transaction_hash,
-                  )
+                ? await publicClient.getTransactionReceipt(logs[i].transaction_hash)
                 : null,
           });
         }
@@ -191,20 +170,16 @@ export const useScaffoldEventHistory = <
         readEvents();
       }
     },
-    watch
-      ? targetNetwork.id !== devnet.id
-        ? scaffoldConfig.pollingInterval
-        : 4_000
-      : null,
+    watch ? (targetNetwork.id !== devnet.id ? scaffoldConfig.pollingInterval : 4_000) : null,
   );
 
   const eventHistoryData = useMemo(() => {
     if (deployedContractData) {
       const abiEvent = (deployedContractData.abi as Abi).find(
-        (part) => part.type === "event" && part.name === eventName,
+        part => part.type === "event" && part.name === eventName,
       ) as ExtractAbiEvent<ContractAbi<TContractName>, TEventName>;
 
-      return events?.map((event) => addIndexedArgsToEvent(event, abiEvent));
+      return events?.map(event => addIndexedArgsToEvent(event, abiEvent));
     }
     return [];
   }, [deployedContractData, events, eventName]);
@@ -221,12 +196,7 @@ export const addIndexedArgsToEvent = (event: any, abiEvent: any) => {
   let keyIndex = 1; // Start after the event name hash
   let dataIndex = 0;
 
-  const parseValue = (
-    array: string[],
-    index: number,
-    type: string,
-    isKey: boolean,
-  ) => {
+  const parseValue = (array: string[], index: number, type: string, isKey: boolean) => {
     if (isCairoByteArray(type)) {
       const size = parseInt(array[index], 16); // Number of elements in ByteArray
       const data = array.slice(index + 1, index + 1 + size);
@@ -271,25 +241,13 @@ export const addIndexedArgsToEvent = (event: any, abiEvent: any) => {
     return array[index];
   };
 
-  abiEvent.members.forEach(
-    (member: { type: string; kind: string; name: string }) => {
-      if (member.kind === "key") {
-        args[member.name] = parseValue(
-          event.log.keys,
-          keyIndex,
-          member.type,
-          true,
-        );
-      } else if (member.kind === "data") {
-        args[member.name] = parseValue(
-          event.log.data,
-          dataIndex,
-          member.type,
-          false,
-        );
-      }
-    },
-  );
+  abiEvent.members.forEach((member: { type: string; kind: string; name: string }) => {
+    if (member.kind === "key") {
+      args[member.name] = parseValue(event.log.keys, keyIndex, member.type, true);
+    } else if (member.kind === "data") {
+      args[member.name] = parseValue(event.log.data, dataIndex, member.type, false);
+    }
+  });
 
   return {
     args,

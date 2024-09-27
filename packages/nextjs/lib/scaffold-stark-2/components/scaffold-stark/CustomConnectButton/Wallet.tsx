@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Connector } from "@starknet-react/core";
 import Image from "next/image";
+import { Connector } from "@starknet-react/core";
 import { useTheme } from "next-themes";
 
 const Wallet = ({
@@ -10,10 +10,7 @@ const Wallet = ({
 }: {
   connector: Connector;
   loader: ({ src }: { src: string }) => string;
-  handleConnectWallet: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    connector: Connector,
-  ) => void;
+  handleConnectWallet: (e: React.MouseEvent<HTMLButtonElement>, connector: Connector) => void;
 }) => {
   const [clicked, setClicked] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -28,8 +25,10 @@ const Wallet = ({
       : (connector.icon as string);
   return (
     <button
-      className={`flex gap-4 items-center text-neutral p-[.2rem] rounded-[4px] transition-all cursor-pointer ${isDarkMode ? "hover:bg-[#385183] border-[#4f4ab7]" : "hover:bg-gradient-light hover:border-none"} border pl-3 ${clicked ? "bg-ligth" : ""}`}
-      onClick={(e) => {
+      className={`flex gap-4 items-center text-neutral p-[.2rem] rounded-[4px] transition-all cursor-pointer ${
+        isDarkMode ? "hover:bg-[#385183] border-[#4f4ab7]" : "hover:bg-gradient-light hover:border-none"
+      } border pl-3 ${clicked ? "bg-ligth" : ""}`}
+      onClick={e => {
         setClicked(true);
         handleConnectWallet(e, connector);
       }}

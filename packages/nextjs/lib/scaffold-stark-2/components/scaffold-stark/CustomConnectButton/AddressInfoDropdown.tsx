@@ -1,7 +1,18 @@
 import { useRef, useState } from "react";
 import { NetworkOptions } from "./NetworkOptions";
+import { BlockieAvatar, isENS } from "@scaffold-stark-2/components/scaffold-stark";
+import { useOutsideClick } from "@scaffold-stark-2/hooks/scaffold-stark";
+import useConditionalStarkProfile from "@scaffold-stark-2/hooks/useConditionalStarkProfile";
+import { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
+import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
+import { getStarknetPFPIfExists } from "@scaffold-stark-2/utils/profile";
+import { getTargetNetworks } from "@scaffold-stark-2/utils/scaffold-stark";
+import { Address } from "@starknet-react/chains";
+import { useConnect, useDisconnect, useNetwork } from "@starknet-react/core";
+import { useTheme } from "next-themes";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { createPortal } from "react-dom";
+import { useLocalStorage } from "usehooks-ts";
 import {
   ArrowLeftEndOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
@@ -12,17 +23,6 @@ import {
   QrCodeIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { useLocalStorage } from "usehooks-ts";
-import { BlockieAvatar, isENS } from "@scaffold-stark-2/components/scaffold-stark";
-import { useOutsideClick } from "@scaffold-stark-2/hooks/scaffold-stark";
-import { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
-import { getTargetNetworks } from "@scaffold-stark-2/utils/scaffold-stark";
-import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
-import { Address } from "@starknet-react/chains";
-import { useDisconnect, useNetwork, useConnect } from "@starknet-react/core";
-import { getStarknetPFPIfExists } from "@scaffold-stark-2/utils/profile";
-import useConditionalStarkProfile from "@scaffold-stark-2/hooks/useConditionalStarkProfile";
-import { useTheme } from "next-themes";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -55,13 +55,8 @@ export const AddressInfoDropdown = ({
   };
   useOutsideClick(dropdownRef, closeDropdown);
 
-  function handleConnectBurner(
-    e: React.MouseEvent<HTMLButtonElement>,
-    ix: number,
-  ) {
-    const connector = connectors.find(
-      (it) => it.id == "burner-wallet",
-    ) as BurnerConnector;
+  function handleConnectBurner(e: React.MouseEvent<HTMLButtonElement>, ix: number) {
+    const connector = connectors.find(it => it.id == "burner-wallet") as BurnerConnector;
     if (connector) {
       connector.burnerAccount = burnerAccounts[ix];
       connect({ connector });
@@ -98,10 +93,7 @@ export const AddressInfoDropdown = ({
             <BlockieAvatar address={address} size={30} ensImage={ensAvatar} />
           )}
           <span className="ml-4 mr-1">
-            {isENS(displayName)
-              ? displayName
-              : profile?.name ||
-                address?.slice(0, 6) + "..." + address?.slice(-4)}
+            {isENS(displayName) ? displayName : profile?.name || address?.slice(0, 6) + "..." + address?.slice(-4)}
           </span>
           <ChevronDownIcon className="h-6 w-4 ml-2 sm:ml-0" />
         </summary>
@@ -140,20 +132,14 @@ export const AddressInfoDropdown = ({
             )}
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
-            <label
-              htmlFor="qrcode-modal"
-              className="btn-sm !rounded-xl flex gap-3 py-3"
-            >
+            <label htmlFor="qrcode-modal" className="btn-sm !rounded-xl flex gap-3 py-3">
               <QrCodeIcon className="h-6 w-4 ml-2 sm:ml-0" />
               <span className="whitespace-nowrap">View QR Code</span>
             </label>
           </li>
           {chain.network != "devnet" ? (
             <li className={selectingNetwork ? "hidden" : ""}>
-              <button
-                className="menu-item btn-sm !rounded-xl flex gap-3 py-3"
-                type="button"
-              >
+              <button className="menu-item btn-sm !rounded-xl flex gap-3 py-3" type="button">
                 <ArrowTopRightOnSquareIcon className="h-6 w-4 ml-2 sm:ml-0" />
                 <a
                   target="_blank"
@@ -190,20 +176,13 @@ export const AddressInfoDropdown = ({
                     <div className="border border-[#4f4ab7] rounded-lg shadow-lg relative w-full mx-auto md:max-h-[30rem] md:max-w-[25rem] bg-base-100 outline-none focus:outline-none">
                       <div className="flex items-start justify-between p-4 pt-8 rounded-t">
                         <div className="flex justify-center items-center w-11/12">
-                          <h2 className="text-lg text-center text-neutral m-0">
-                            Choose Account
-                          </h2>
+                          <h2 className="text-lg text-center text-neutral m-0">Choose Account</h2>
                         </div>
                         <button
                           className="w-8 h-8 place-content-end rounded-full justify-center items-center flex"
                           onClick={() => setShowBurnerAccounts(false)}
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                          >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path
                               fill="currentColor"
                               d="m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z"
@@ -215,18 +194,14 @@ export const AddressInfoDropdown = ({
                         <div className="h-[300px] overflow-y-auto flex w-full flex-col gap-2">
                           {burnerAccounts.map((burnerAcc, ix) => (
                             // eslint-disable-next-line react/jsx-key
-                            <div
-                              key={burnerAcc.publicKey}
-                              className="w-full flex flex-col"
-                            >
+                            <div key={burnerAcc.publicKey} className="w-full flex flex-col">
                               <button
-                                className={`${isDarkMode ? "hover:bg-[#385183] border-[#385183]" : "hover:bg-gradient-light "} border rounded-md text-neutral py-[8px] pl-[10px] pr-16 flex items-center gap-4`}
-                                onClick={(e) => handleConnectBurner(e, ix)}
+                                className={`${
+                                  isDarkMode ? "hover:bg-[#385183] border-[#385183]" : "hover:bg-gradient-light "
+                                } border rounded-md text-neutral py-[8px] pl-[10px] pr-16 flex items-center gap-4`}
+                                onClick={e => handleConnectBurner(e, ix)}
                               >
-                                <BlockieAvatar
-                                  address={burnerAcc.accountAddress}
-                                  size={35}
-                                ></BlockieAvatar>
+                                <BlockieAvatar address={burnerAcc.accountAddress} size={35}></BlockieAvatar>
                                 {`${burnerAcc.accountAddress.slice(0, 6)}...${burnerAcc.accountAddress.slice(-4)}`}
                               </button>
                             </div>
@@ -262,8 +237,7 @@ export const AddressInfoDropdown = ({
               type="button"
               onClick={() => disconnect()}
             >
-              <ArrowLeftEndOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" />{" "}
-              <span>Disconnect</span>
+              <ArrowLeftEndOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Disconnect</span>
             </button>
           </li>
         </ul>

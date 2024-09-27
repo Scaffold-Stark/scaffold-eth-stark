@@ -165,10 +165,15 @@ export const AddressInfoDropdown = ({
               <>
                 <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                   <div className="relative w-auto my-6 mx-auto max-w-5xl">
-                    <div className="border border-[#4f4ab7] rounded-lg shadow-lg relative w-full mx-auto md:max-h-[30rem] md:max-w-[25rem] bg-base-100 outline-none focus:outline-none">
+                    <div
+                      style={{
+                        background: "#14161d",
+                      }}
+                      className="border border-gray-600 rounded-lg shadow-lg relative w-full mx-auto md:max-h-[30rem] md:max-w-[25rem] bg-base-100 outline-none focus:outline-none"
+                    >
                       <div className="flex items-start justify-between p-4 pt-8 rounded-t">
                         <div className="flex justify-center items-center w-11/12">
-                          <h2 className="text-lg text-center text-neutral m-0">Choose Account</h2>
+                          <h2 className="text-lg text-center m-0 text-white">Choose Account</h2>
                         </div>
                         <button
                           className="w-8 h-8 place-content-end rounded-full justify-center items-center flex"
@@ -176,21 +181,21 @@ export const AddressInfoDropdown = ({
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <path
-                              fill="currentColor"
+                              fill="white"
                               d="m6.4 18.308l-.708-.708l5.6-5.6l-5.6-5.6l.708-.708l5.6 5.6l5.6-5.6l.708.708l-5.6 5.6l5.6 5.6l-.708.708l-5.6-5.6z"
                             />
                           </svg>
                         </button>
                       </div>
                       <div className="flex flex-col items-center justify-center gap-3 mx-8 pb-10 pt-8">
-                        <div className="h-[300px] overflow-y-auto flex w-full flex-col gap-2">
+                        <div className="h-[300px] overflow-y-auto flex w-full flex-col gap-4">
                           {burnerAccounts.map((burnerAcc, ix) => (
                             // eslint-disable-next-line react/jsx-key
                             <div key={burnerAcc.publicKey} className="w-full flex flex-col">
                               <button
-                                className={`${
-                                  isDarkMode ? "hover:bg-[#385183] border-[#385183]" : "hover:bg-gradient-light "
-                                } border rounded-md text-neutral py-[8px] pl-[10px] pr-16 flex items-center gap-4`}
+                                className={`text-white border border-gray-600 rounded-md  py-[8px] pl-[10px] pr-16 flex items-center gap-4 bg-[#14161d]
+                                  hover:text-black hover:bg-white
+                                  `}
                                 onClick={e => handleConnectBurner(e, ix)}
                               >
                                 <BlockieAvatar address={burnerAcc.accountAddress} size={35}></BlockieAvatar>
