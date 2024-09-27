@@ -21,7 +21,7 @@ export const WrongNetworkDropdown = () => {
         tabIndex={0}
         className="dropdown-content menu p-2 mt-1 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
       >
-        <NetworkOptions />
+        {/* <NetworkOptions /> */}
         <li>
           <button
             className="menu-item text-error btn-sm !rounded-xl flex gap-3 py-3"

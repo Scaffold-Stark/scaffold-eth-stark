@@ -27,6 +27,7 @@ p {
 .content {
   max-width: 1600px;
 }
+
 @media (max-width: 1600px) {
   .content {
     padding: 0 24px;
@@ -81,4 +82,8 @@ p {
   align-items: center;
   cursor: pointer;
   color: white;
+}
+
+.dropdown .dropdown-content{
+  z-index: 99;
 }

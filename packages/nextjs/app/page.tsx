@@ -56,8 +56,6 @@ const Home = () => {
     },
   });
 
-  console.log("eventHistoryData", eventHistoryData);
-
   const {
     isLoading: isGreetingLoading,
     data: greeting,
