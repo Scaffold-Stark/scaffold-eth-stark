@@ -130,13 +130,13 @@ const Home = () => {
 
   useEffect(() => {
     const checkLoading = () => {
-      if (!contractLoading && !deployedContractLoading && !eventHistoryLoading) {
+      if (!contractLoading && !deployedContractLoading && !eventHistoryLoading && !isGreetingLoading) {
         setIsLoading(false);
       }
     };
 
     checkLoading();
-  }, [contractLoading, deployedContractLoading, eventHistoryLoading]);
+  }, [contractLoading, deployedContractLoading, eventHistoryLoading, isGreetingLoading]);
 
   if (isLoading) {
     return (
