@@ -130,7 +130,9 @@ const Home = () => {
 
   useEffect(() => {
     const checkLoading = () => {
-      if (!contractLoading && !deployedContractLoading && !eventHistoryLoading && !isGreetingLoading) {
+      if (contractLoading && deployedContractLoading && eventHistoryLoading && isGreetingLoading) {
+        setIsLoading(true);
+      } else {
         setIsLoading(false);
       }
     };
@@ -145,6 +147,7 @@ const Home = () => {
       </div>
     );
   }
+
   return (
     <div className="text-white">
       <h1 className="text-3xl text-center mt-10">Starknet and EVM chains playground</h1>
