@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { EVMChain, evmChains } from "~~/chainsConfig";
 import { useDynamicAccount } from "~~/dynamic/hooks/useDynamicAccount";
 import { useDynamicContract } from "~~/dynamic/hooks/useDynamicContract";
 import { useDynamicDeployContract } from "~~/dynamic/hooks/useDynamicDeployContract";
@@ -14,9 +15,23 @@ const Home = () => {
   const currentChain = useGlobalState(state => state.currentChain);
   const { address } = useDynamicAccount();
   const targetNetwork = useDynamicTargetNetwork();
-
-  const [isLoading, setIsLoading] = useState(true);
   const [greetingState, setGreetingState] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [selectedChain, setSelectedChain] = useState<EVMChain | null>(null);
+
+  const switchChain = async (chain: EVMChain) => {
+    try {
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: `0x${chain.chainId.toString(16)}` }], // Chuyển đổi chainId sang định dạng hexadecimal
+      });
+      setSelectedChain(chain);
+    } catch (error) {
+      console.error("Failed to switch chain:", error);
+    }
+  };
+
   const {
     data: contractData,
     isLoading: contractLoading,
@@ -98,14 +113,30 @@ const Home = () => {
   }, [greeting]);
 
   useEffect(() => {
+    const checkSelectedChain = async () => {
+      if (window.ethereum) {
+        try {
+          const chainId = await window.ethereum.request({ method: "eth_chainId" });
+          const currentChain = evmChains.find(chain => chain.chainId === parseInt(chainId, 16));
+          setSelectedChain(currentChain || null);
+        } catch (error) {
+          console.error("Error fetching chain ID:", error);
+        }
+      }
+    };
+
+    checkSelectedChain();
+  }, []);
+
+  useEffect(() => {
     const checkLoading = () => {
-      if (!contractLoading && !deployedContractLoading && !eventHistoryLoading && !isGreetingLoading) {
+      if (!contractLoading && !deployedContractLoading && !eventHistoryLoading) {
         setIsLoading(false);
       }
     };
 
     checkLoading();
-  }, [contractLoading, deployedContractLoading, eventHistoryLoading, isGreetingLoading]);
+  }, [contractLoading, deployedContractLoading, eventHistoryLoading]);
 
   if (isLoading) {
     return (
@@ -114,7 +145,6 @@ const Home = () => {
       </div>
     );
   }
-
   return (
     <div className="text-white">
       <h1 className="text-3xl text-center mt-10">Starknet and EVM chains playground</h1>
@@ -125,29 +155,30 @@ const Home = () => {
               <td className="font-bold max-w-[200px]">Current chain</td>
               <td className="text-left">{currentChain}</td>
             </tr>
-            <div className="my-5"></div>
+
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Current address</td>
               <td className="max-w-[400px] truncate text-left">{address}</td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">YourContract greeting</td>
               <td className="text-left">{isGreetingLoading ? "Loading..." : String(greeting)}</td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Network</td>
               <td className="text-left">{targetNetwork?.name}</td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Contract address</td>
               <td>
                 {!contractError ? <div>{contractLoading ? "Loading..." : contractData?.address}</div> : contractError}
               </td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Deployed contract info</td>
               <td>
@@ -158,7 +189,7 @@ const Home = () => {
                 )}
               </td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Events</td>
               <td>
@@ -174,6 +205,25 @@ const Home = () => {
                 )}
               </td>
             </tr>
+            <tr className="h-[20px]"></tr>
+            {currentChain === "ethereum" && (
+              <tr>
+                <td className="font-bold max-w-[200px]">List EVM Chains</td>
+                <td className="flex items-center gap-2">
+                  {evmChains.map(chain => (
+                    <p
+                      className={`px-3 py-1 ${
+                        selectedChain?.name === chain.name ? "bg-blue-200" : "bg-white"
+                      } text-black rounded-md cursor-pointer`}
+                      key={chain.chainId}
+                      onClick={() => switchChain(chain)}
+                    >
+                      {chain.name}
+                    </p>
+                  ))}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
 
