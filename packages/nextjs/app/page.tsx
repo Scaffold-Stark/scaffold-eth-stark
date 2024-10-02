@@ -16,7 +16,7 @@ const Home = () => {
   const { address } = useDynamicAccount();
   const targetNetwork = useDynamicTargetNetwork();
   const [greetingState, setGreetingState] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [selectedChain, setSelectedChain] = useState<EVMChain | null>(null);
 
@@ -129,15 +129,11 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const checkLoading = () => {
-      if (contractLoading && deployedContractLoading && eventHistoryLoading && isGreetingLoading) {
-        setIsLoading(true);
-      } else {
-        setIsLoading(false);
-      }
-    };
-
-    checkLoading();
+    if (contractLoading && deployedContractLoading && eventHistoryLoading && isGreetingLoading) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
   }, [contractLoading, deployedContractLoading, eventHistoryLoading, isGreetingLoading]);
 
   if (isLoading) {
