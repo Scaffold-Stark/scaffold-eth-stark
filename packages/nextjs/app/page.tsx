@@ -18,20 +18,6 @@ const Home = () => {
   const [greetingState, setGreetingState] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const [selectedChain, setSelectedChain] = useState<EVMChain | null>(null);
-
-  const switchChain = async (chain: EVMChain) => {
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: `0x${chain.chainId.toString(16)}` }], // Chuyển đổi chainId sang định dạng hexadecimal
-      });
-      setSelectedChain(chain);
-    } catch (error) {
-      console.error("Failed to switch chain:", error);
-    }
-  };
-
   const {
     data: contractData,
     isLoading: contractLoading,
@@ -113,22 +99,6 @@ const Home = () => {
   }, [greeting]);
 
   useEffect(() => {
-    const checkSelectedChain = async () => {
-      if (window.ethereum) {
-        try {
-          const chainId = await window.ethereum.request({ method: "eth_chainId" });
-          const currentChain = evmChains.find(chain => chain.chainId === parseInt(chainId, 16));
-          setSelectedChain(currentChain || null);
-        } catch (error) {
-          console.error("Error fetching chain ID:", error);
-        }
-      }
-    };
-
-    checkSelectedChain();
-  }, []);
-
-  useEffect(() => {
     if (contractLoading && deployedContractLoading && eventHistoryLoading && isGreetingLoading) {
       setIsLoading(true);
     } else {
@@ -205,24 +175,6 @@ const Home = () => {
               </td>
             </tr>
             <tr className="h-[20px]"></tr>
-            {currentChain === "ethereum" && (
-              <tr>
-                <td className="font-bold max-w-[200px]">List EVM Chains</td>
-                <td className="flex items-center gap-2">
-                  {evmChains.map(chain => (
-                    <p
-                      className={`px-3 py-1 ${
-                        selectedChain?.name === chain.name ? "bg-blue-200" : "bg-white"
-                      } text-black rounded-md cursor-pointer`}
-                      key={chain.chainId}
-                      onClick={() => switchChain(chain)}
-                    >
-                      {chain.name}
-                    </p>
-                  ))}
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
 
