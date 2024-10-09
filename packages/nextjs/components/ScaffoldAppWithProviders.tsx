@@ -64,6 +64,7 @@ export const ScaffoldAppWithProviders = ({ children }: { children: React.ReactNo
         if (lastSelectedChain == ChainType.Ethereum) {
           if (lastEVMChain) {
             setTargetNetwork(lastEVMChain);
+            setLastEVMChain(lastEVMChain);
           }
         }
         setCurrentChain(lastSelectedChain);
@@ -78,6 +79,7 @@ export const ScaffoldAppWithProviders = ({ children }: { children: React.ReactNo
           <RainbowKitProvider
             avatar={BlockieAvatar}
             theme={mounted ? (isDarkMode ? darkTheme() : lightTheme()) : lightTheme()}
+            initialChain={lastEVMChain ? lastEVMChain.id : undefined}
           >
             <ScaffoldCrossChainApp>{children}</ScaffoldCrossChainApp>
           </RainbowKitProvider>

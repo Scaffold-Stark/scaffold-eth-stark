@@ -31,8 +31,8 @@ export default function SelectNetWorkModal() {
     isError: isSwitchingError,
     isSuccess: isSwitchingSuccess,
   } = useSwitchChain();
-  const { isConnected } = useAccount();
-  const { currentChain } = useGlobalState(state => state);
+  const { isConnected: isEVMConnected } = useAccount();
+  const { currentChain, setLastEVMChain: setLastEVMChainGlobalState } = useGlobalState(state => state);
   const setCurrentChain = useGlobalState(state => state.setCurrentChain);
 
   const [open, setOpen] = useState<boolean>(false);
@@ -92,11 +92,12 @@ export default function SelectNetWorkModal() {
   const handleEthereumNetworkClick = (network: ChainWithAttributes) => {
     setEthActiveNetwork(network);
     setCurrentChain(ChainType.Ethereum);
-    if (isConnected) {
+    if (isEVMConnected) {
       switchChain?.({ chainId: network.id });
     }
     setTargetNetwork(network);
     setLastEVMChain(network);
+    setLastEVMChainGlobalState(network);
   };
 
   const handleStarknetClick = () => {
