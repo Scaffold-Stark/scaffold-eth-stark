@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { BlockieAvatar } from "@scaffold-eth-2/components/scaffold-eth";
 import { useInitializeNativeCurrencyPrice } from "@scaffold-eth-2/hooks/scaffold-eth";
+import { useGlobalState as useEthGlobalState } from "@scaffold-eth-2/services/store/store";
 import { wagmiConfig } from "@scaffold-eth-2/services/web3/wagmiConfig";
+import { ChainWithAttributes } from "@scaffold-eth-2/utils/scaffold-eth";
 import { useNativeCurrencyPrice } from "@scaffold-stark-2/hooks/scaffold-stark/useNativeCurrencyPrice";
 import { appChains, connectors } from "@scaffold-stark-2/services/web3/connectors";
 import provider from "@scaffold-stark-2/services/web3/provider";
@@ -47,6 +49,8 @@ export const ScaffoldAppWithProviders = ({ children }: { children: React.ReactNo
   const [mounted, setMounted] = useState(false);
   const setCurrentChain = useGlobalState(state => state.setCurrentChain);
   const [lastSelectedChain, setLastSelectedChain] = useLocalStorage<string>("lastSelectedChain", "");
+  const [lastEVMChain, setLastEVMChain] = useLocalStorage<ChainWithAttributes | null>("lastEVMChain", null);
+  const setTargetNetwork = useEthGlobalState(state => state.setTargetNetwork);
 
   useEffect(() => {
     setMounted(true);
@@ -56,6 +60,12 @@ export const ScaffoldAppWithProviders = ({ children }: { children: React.ReactNo
         setCurrentChain(ChainType.Ethereum);
         setLastSelectedChain(ChainType.Ethereum);
       } else {
+        // check if last selected chain is evm chain, then need to set last evm chain
+        if (lastSelectedChain == ChainType.Ethereum) {
+          if (lastEVMChain) {
+            setTargetNetwork(lastEVMChain);
+          }
+        }
         setCurrentChain(lastSelectedChain);
       }
     }
