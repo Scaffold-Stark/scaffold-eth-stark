@@ -1,4 +1,3 @@
-import { ChainWithAttributes } from "@scaffold-eth-2/utils/scaffold-eth";
 import { create } from "zustand";
 
 /**
@@ -12,14 +11,10 @@ import { create } from "zustand";
 
 export type GlobalState = {
   currentChain: string;
-  lastEVMChain: ChainWithAttributes | null;
   setCurrentChain: (newSelectedChain: string) => void;
-  setLastEVMChain: (newLastEVMChain: ChainWithAttributes) => void;
 };
 
 export const useGlobalState = create<GlobalState>((set: any) => ({
   currentChain: "",
-  lastEVMChain: null,
   setCurrentChain: (newSelectedChain: string): void => set(() => ({ currentChain: newSelectedChain })),
-  setLastEVMChain: (newLastEVMChain: ChainWithAttributes): void => set(() => ({ lastEVMChain: newLastEVMChain })),
 }));
