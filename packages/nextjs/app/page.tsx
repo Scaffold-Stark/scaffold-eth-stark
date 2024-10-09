@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { EVMChain, evmChains } from "~~/chainsConfig";
 import { useDynamicAccount } from "~~/dynamic/hooks/useDynamicAccount";
 import { useDynamicContract } from "~~/dynamic/hooks/useDynamicContract";
 import { useDynamicDeployContract } from "~~/dynamic/hooks/useDynamicDeployContract";

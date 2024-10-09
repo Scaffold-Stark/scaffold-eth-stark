@@ -3,7 +3,10 @@ import Image from "next/image";
 import EthNetwork from "../../public/icons/eth-network-icon.svg";
 import StrkNetwork from "../../public/icons/strk-network-icon.svg";
 import GenericModal from "./scaffold-stark/CustomConnectButton/GenericModal";
+import { useTargetNetwork } from "@scaffold-eth-2/hooks/scaffold-eth";
+import { ChainWithAttributes, getTargetNetworks } from "@scaffold-eth-2/utils/scaffold-eth";
 import { useLocalStorage } from "usehooks-ts";
+import { useSwitchChain } from "wagmi";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
 
@@ -21,12 +24,17 @@ const ArrowDownIcon = ({ color }: { color: string }) => {
 };
 
 export default function SelectNetWorkModal() {
+  const { switchChain } = useSwitchChain();
   const [open, setOpen] = useState<boolean>(false);
   const [animate, setAnimate] = useState(false);
   const [activeNetwork, setActiveNetwork] = useState<string>("");
+  const [ethActiveNetwork, setEthActiveNetwork] = useState<ChainWithAttributes | null>(null);
   const currentChain = useGlobalState(state => state.currentChain);
   const setCurrentChain = useGlobalState(state => state.setCurrentChain);
   const [_, setLastSelectedChain] = useLocalStorage<string>("lastSelectedChain", "");
+  const { targetNetwork: evmTargetNetwork } = useTargetNetwork();
+
+  const evmTargetNetworks = getTargetNetworks();
 
   const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -38,7 +46,8 @@ export default function SelectNetWorkModal() {
 
   useEffect(() => {
     setActiveNetwork(currentChain);
-  }, [currentChain]);
+    setEthActiveNetwork(evmTargetNetwork);
+  }, [currentChain, evmTargetNetwork]);
   useEffect(() => setAnimate(open), [open]);
 
   return (
@@ -67,16 +76,31 @@ export default function SelectNetWorkModal() {
         <p className="text-2xl font-bold text-white">Connect Network</p>
         <p className="text-sm text-white">Choose your network to connect wallet</p>
         <div className="flex items-center gap-4 mt-4">
-          <div
-            onClick={() => {
-              setActiveNetwork(ChainType.Ethereum);
-              setLastSelectedChain(ChainType.Ethereum);
-              setCurrentChain(ChainType.Ethereum);
-            }}
-            className={`network  ${activeNetwork === ChainType.Ethereum ? "active-network" : "bg-network"}`}
-          >
-            <Image src={EthNetwork} alt="Ethereum Network" loading="lazy" width={50} height={50} />
-            <p className="uppercase mt-2">Ethereum</p>
+          {/* this side are all ethereum */}
+          <div className="flex gap-4">
+            {evmTargetNetworks &&
+              evmTargetNetworks.map(network => (
+                <div
+                  key={network.id}
+                  onClick={() => {
+                    setActiveNetwork(ChainType.Ethereum);
+                    setLastSelectedChain(ChainType.Ethereum);
+                    setCurrentChain(ChainType.Ethereum);
+                    setEthActiveNetwork(network);
+                    switchChain?.({ chainId: network.id });
+                  }}
+                  className={`network  ${
+                    activeNetwork === ChainType.Ethereum
+                      ? ethActiveNetwork?.id === network.id
+                        ? "active-network"
+                        : "bg-network"
+                      : "bg-network"
+                  }`}
+                >
+                  <Image src={EthNetwork} alt="Ethereum Network" loading="lazy" width={50} height={50} />
+                  <p className="uppercase mt-2">{network.name}</p>
+                </div>
+              ))}
           </div>
           <div
             onClick={() => {
