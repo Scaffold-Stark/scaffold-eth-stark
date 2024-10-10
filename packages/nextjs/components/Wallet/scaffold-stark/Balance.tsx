@@ -73,7 +73,7 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
           {displayUsdMode ? (
             <div className="flex">
               <span className="text-[0.8em] font-bold mr-1">$</span>
-              <span>
+              <span className="text-white">
                 {totalBalanceInUsd.toLocaleString("en-US", {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -85,7 +85,7 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
               <div className="text-gray-500 flex gap-4">
                 <div className="flex">
                   <span>{parseFloat(formatted).toFixed(4)}</span>
-                  <span className="text-[0.8em] font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>
+                  <span className="text-[0.8em] tex-white font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>
                 </div>
 
                 <div className="flex">

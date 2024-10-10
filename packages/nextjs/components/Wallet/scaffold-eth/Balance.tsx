@@ -59,13 +59,13 @@ export const Balance = ({ address, className = "", usdMode }: BalanceProps) => {
       <div className="w-full flex items-center justify-center">
         {displayUsdMode ? (
           <>
-            <span className=" text-[0.8em] font-bold mr-1">$</span>
-            <span>{(formattedBalance * nativeCurrencyPrice).toFixed(2)}</span>
+            <span className="text-white text-[0.8em] font-bold mr-1">$</span>
+            <span className="text-white">{(formattedBalance * nativeCurrencyPrice).toFixed(2)}</span>
           </>
         ) : (
           <>
-            <span>{formattedBalance.toFixed(4)}</span>
-            <span className="text-[0.8em] font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>
+            <span className="text-white">{formattedBalance.toFixed(4)}</span>
+            <span className="text-white text-[0.8em] font-bold ml-1">{targetNetwork.nativeCurrency.symbol}</span>
           </>
         )}
       </div>

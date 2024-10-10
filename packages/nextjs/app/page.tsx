@@ -14,9 +14,9 @@ const Home = () => {
   const currentChain = useGlobalState(state => state.currentChain);
   const { address } = useDynamicAccount();
   const targetNetwork = useDynamicTargetNetwork();
-
-  const [isLoading, setIsLoading] = useState(true);
   const [greetingState, setGreetingState] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     data: contractData,
     isLoading: contractLoading,
@@ -98,13 +98,11 @@ const Home = () => {
   }, [greeting]);
 
   useEffect(() => {
-    const checkLoading = () => {
-      if (!contractLoading && !deployedContractLoading && !eventHistoryLoading && !isGreetingLoading) {
-        setIsLoading(false);
-      }
-    };
-
-    checkLoading();
+    if (contractLoading && deployedContractLoading && eventHistoryLoading && isGreetingLoading) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
   }, [contractLoading, deployedContractLoading, eventHistoryLoading, isGreetingLoading]);
 
   if (isLoading) {
@@ -125,29 +123,30 @@ const Home = () => {
               <td className="font-bold max-w-[200px]">Current chain</td>
               <td className="text-left">{currentChain}</td>
             </tr>
-            <div className="my-5"></div>
+
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Current address</td>
               <td className="max-w-[400px] truncate text-left">{address}</td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">YourContract greeting</td>
               <td className="text-left">{isGreetingLoading ? "Loading..." : String(greeting)}</td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Network</td>
               <td className="text-left">{targetNetwork?.name}</td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Contract address</td>
               <td>
                 {!contractError ? <div>{contractLoading ? "Loading..." : contractData?.address}</div> : contractError}
               </td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Deployed contract info</td>
               <td>
@@ -158,7 +157,7 @@ const Home = () => {
                 )}
               </td>
             </tr>
-            <div className="my-5"></div>
+            <tr className="h-[20px]"></tr>
             <tr>
               <td className="font-bold max-w-[200px]">Events</td>
               <td>
@@ -174,6 +173,7 @@ const Home = () => {
                 )}
               </td>
             </tr>
+            <tr className="h-[20px]"></tr>
           </tbody>
         </table>
 
