@@ -22,6 +22,9 @@ Before you begin, you need to install the following tools:
 - [Rust](https://www.rust-lang.org/tools/install)
 - [asdf](https://asdf-vm.com/guide/getting-started.html)
 - [Cairo 1.0 extension for VSCode](https://marketplace.visualstudio.com/items?itemName=starkware.cairo1)
+- [Foundryup](https://book.getfoundry.sh/getting-started/installation)
+
+> **Note for Windows users**. Foundryup is not currently supported by Powershell or Cmd. You will need to use [Git BASH](https://gitforwindows.org/) or [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) as your terminal.
 
 ### Starknet-devnet version
 
@@ -117,3 +120,13 @@ yarn start
 ```
 
 Visit your app on: `http://localhost:3000`. You can tweak the app config in `packages/nextjs/config.ts`.
+
+## Documentation
+
+> PROGRESSING...
+
+## Contributing to Scaffold-ETH-Stark
+
+We welcome contributions to Scaffold-ETH-Stark!
+
+Please see [CONTRIBUTING.MD](https://github.com/Scaffold-Stark/scaffold-eth-stark/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH-Stark.
