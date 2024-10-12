@@ -5,7 +5,7 @@ import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
 
 export const metadata: Metadata = {
-  title: "ETH - STRK - Cross Chain Template",
+  title: "ETH - STRK - Multichain Template",
   description: "Seamlessly interact with Starknet and Ethereum!",
   icons: "/logo.ico",
 };

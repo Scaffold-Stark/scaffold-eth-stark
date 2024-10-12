@@ -1,9 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import EthNetwork from "../../public/icons/eth-network-icon.svg";
-import StrkNetwork from "../../public/icons/strk-network-icon.svg";
+import EthNetwork from "../../public/networks/eth-network-icon.svg";
+import StrkNetwork from "../../public/networks/strk-network-icon.svg";
 import GenericModal from "./scaffold-stark/CustomConnectButton/GenericModal";
+import { useTargetNetwork } from "@scaffold-eth-2/hooks/scaffold-eth";
+import { useGlobalState as useEthGlobalState } from "@scaffold-eth-2/services/store/store";
+import { ChainWithAttributes, getTargetNetworks } from "@scaffold-eth-2/utils/scaffold-eth";
 import { useLocalStorage } from "usehooks-ts";
+import { useAccount, useSwitchChain } from "wagmi";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
 
@@ -13,20 +17,69 @@ const ArrowDownIcon = ({ color }: { color: string }) => {
       <path
         d="M3.13523 6.15803C3.3241 5.95657 3.64052 5.94637 3.84197 6.13523L7.5 9.56464L11.158 6.13523C11.3595 5.94637 11.6759 5.95657 11.8648 6.15803C12.0536 6.35949 12.0434 6.67591 11.842 6.86477L7.84197 10.6148C7.64964 10.7951 7.35036 10.7951 7.15803 10.6148L3.15803 6.86477C2.95657 6.67591 2.94637 6.35949 3.13523 6.15803Z"
         fill={color}
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
       ></path>
     </svg>
   );
 };
 
 export default function SelectNetWorkModal() {
+  const {
+    switchChain,
+    isPending: isSwitchingChain,
+    isError: isSwitchingError,
+    isSuccess: isSwitchingSuccess,
+  } = useSwitchChain();
+  const { isConnected: isEVMConnected } = useAccount();
+  const { currentChain, setLastEVMChain: setLastEVMChainGlobalState } = useGlobalState(state => state);
+  const setCurrentChain = useGlobalState(state => state.setCurrentChain);
+
   const [open, setOpen] = useState<boolean>(false);
   const [animate, setAnimate] = useState(false);
   const [activeNetwork, setActiveNetwork] = useState<string>("");
-  const currentChain = useGlobalState(state => state.currentChain);
-  const setCurrentChain = useGlobalState(state => state.setCurrentChain);
-  const [_, setLastSelectedChain] = useLocalStorage<string>("lastSelectedChain", "");
+  const [ethActiveNetwork, setEthActiveNetwork] = useState<ChainWithAttributes | null>(null);
+
+  const [lastSelectedChain, setLastSelectedChain] = useLocalStorage<string>("lastSelectedChain", "");
+  const [_, setLastEVMChain] = useLocalStorage<ChainWithAttributes | null>("lastEVMChain", null);
+
+  const { targetNetwork: evmTargetNetwork } = useTargetNetwork();
+  const setTargetNetwork = useEthGlobalState(state => state.setTargetNetwork);
+
+  const evmTargetNetworks = getTargetNetworks();
+
+  useEffect(() => {
+    setActiveNetwork(currentChain);
+
+    if (lastSelectedChain == ChainType.Starknet && currentChain == ChainType.Ethereum) {
+      if (!isSwitchingChain) {
+        if (isSwitchingError) {
+          setLastSelectedChain(ChainType.Starknet);
+          setCurrentChain(ChainType.Starknet);
+          setActiveNetwork(ChainType.Starknet);
+        } else {
+          setCurrentChain(ChainType.Ethereum);
+          setLastSelectedChain(ChainType.Ethereum);
+          setActiveNetwork(ChainType.Ethereum);
+        }
+      }
+    } else if (lastSelectedChain == ChainType.Ethereum && currentChain == ChainType.Ethereum) {
+      if (!isSwitchingChain) {
+        setEthActiveNetwork(evmTargetNetwork);
+      }
+      if (isSwitchingError) {
+        setEthActiveNetwork(evmTargetNetwork);
+      }
+      if (isSwitchingSuccess) {
+        setCurrentChain(ChainType.Ethereum);
+        setLastSelectedChain(ChainType.Ethereum);
+        setActiveNetwork(ChainType.Ethereum);
+        setEthActiveNetwork(evmTargetNetwork);
+      }
+    }
+  }, [currentChain, evmTargetNetwork, isSwitchingError, isSwitchingSuccess]);
+
+  useEffect(() => setAnimate(open), [open]);
 
   const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -36,10 +89,21 @@ export default function SelectNetWorkModal() {
     }, 400);
   };
 
-  useEffect(() => {
-    setActiveNetwork(currentChain);
-  }, [currentChain]);
-  useEffect(() => setAnimate(open), [open]);
+  const handleEthereumNetworkClick = (network: ChainWithAttributes) => {
+    setEthActiveNetwork(network);
+    setCurrentChain(ChainType.Ethereum);
+    if (isEVMConnected) {
+      switchChain?.({ chainId: network.id });
+    }
+    setTargetNetwork(network);
+    setLastEVMChain(network);
+    setLastEVMChainGlobalState(network);
+  };
+
+  const handleStarknetClick = () => {
+    setLastSelectedChain(ChainType.Starknet);
+    setCurrentChain(ChainType.Starknet);
+  };
 
   return (
     <>
@@ -67,23 +131,28 @@ export default function SelectNetWorkModal() {
         <p className="text-2xl font-bold text-white">Connect Network</p>
         <p className="text-sm text-white">Choose your network to connect wallet</p>
         <div className="flex items-center gap-4 mt-4">
-          <div
-            onClick={() => {
-              setActiveNetwork(ChainType.Ethereum);
-              setLastSelectedChain(ChainType.Ethereum);
-              setCurrentChain(ChainType.Ethereum);
-            }}
-            className={`network  ${activeNetwork === ChainType.Ethereum ? "active-network" : "bg-network"}`}
-          >
-            <Image src={EthNetwork} alt="Ethereum Network" loading="lazy" width={50} height={50} />
-            <p className="uppercase mt-2">Ethereum</p>
+          {/* this side are all ethereum */}
+          <div className="flex gap-4">
+            {evmTargetNetworks &&
+              evmTargetNetworks.map(network => (
+                <div
+                  key={network.id}
+                  onClick={() => handleEthereumNetworkClick(network)}
+                  className={`network  ${
+                    activeNetwork === ChainType.Ethereum
+                      ? ethActiveNetwork?.id === network.id
+                        ? "active-network"
+                        : "bg-network"
+                      : "bg-network"
+                  }`}
+                >
+                  <Image src={EthNetwork} alt="Ethereum Network" loading="lazy" width={50} height={50} />
+                  <p className="uppercase mt-2">{network.name}</p>
+                </div>
+              ))}
           </div>
           <div
-            onClick={() => {
-              setActiveNetwork(ChainType.Starknet);
-              setLastSelectedChain(ChainType.Starknet);
-              setCurrentChain(ChainType.Starknet);
-            }}
+            onClick={handleStarknetClick}
             className={`network ${activeNetwork === ChainType.Starknet ? "active-network" : "bg-network"}`}
           >
             <Image src={StrkNetwork} alt="StarkNet Network" loading="lazy" width={50} height={50} />
