@@ -61,8 +61,8 @@ const Home = () => {
     data: greeting,
     refetch: refetchGreeting,
   } = useDynamicReadContract({
-    strk: { contractName: "YourContract", functionName: "greeting", args: [] },
-    eth: { contractName: "YourContract", functionName: "greeting", args: [] },
+    strk: { contractName: "YourContract", functionName: "greeting", watch: true, args: [] },
+    eth: { contractName: "YourContract", functionName: "greeting", watch: true },
   });
 
   const { writeAsync, isPending: greetingPending } = useDynamicWriteContract({
@@ -81,7 +81,6 @@ const Home = () => {
   async function handleClick() {
     try {
       await writeAsync();
-      console.log("after click");
       // after transaction successfull, we need refetch the contract data
       await refetchGreeting();
     } catch (error) {
@@ -92,6 +91,10 @@ const Home = () => {
   const handleGreetingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGreetingState(e.target.value);
   };
+
+  useEffect(() => {
+    refetchGreeting();
+  }, []);
 
   useEffect(() => {
     setGreetingState(greeting ? greeting.toString() : "");
@@ -161,16 +164,12 @@ const Home = () => {
             <tr>
               <td className="font-bold max-w-[200px]">Events</td>
               <td>
-                {eventHistoryLoading ? (
-                  <div>Loading...</div>
-                ) : (
-                  eventHistoryData &&
+                {eventHistoryData &&
                   eventHistoryData.map((event: any, index: number) => (
                     <div key={index}>
                       Event {index}: {currentChain == "ethereum" ? event?.topics[1] : event.args.new_greeting}
                     </div>
-                  ))
-                )}
+                  ))}
               </td>
             </tr>
             <tr className="h-[20px]"></tr>

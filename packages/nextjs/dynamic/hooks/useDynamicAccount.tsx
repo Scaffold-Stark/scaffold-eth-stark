@@ -5,20 +5,35 @@ import { ChainType } from "~~/dynamic/types/chains";
 
 export function useDynamicAccount() {
   const currentChain = useGlobalState(state => state.currentChain);
-  const { address: starknetAccountAddress } = useStarknetAccount();
-  const { address: ethtAccountAddress } = useEthAccount();
+  const {
+    address: starknetAccountAddress,
+    isConnected: isStarknetConnected,
+    isConnecting: isStarknetConnecting,
+    chainId: starknetChainId,
+    isDisconnected: isStarknetDisconnected,
+    connector: starknetConnector,
+    isReconnecting: isStarknetReconnecting,
+    status: starknetStatus,
+  } = useStarknetAccount();
+  const {
+    address: ethtAccountAddress,
+    isConnected: isEthConnected,
+    isConnecting: isEthConnecting,
+    chainId: ethChainId,
+    isDisconnected: isEthDisconnected,
+    connector: ethConnector,
+    isReconnecting: isEthReconnecting,
+    status: ethStatus,
+  } = useEthAccount();
 
   return {
-    address: (() => {
-      let addr;
-      if (currentChain == ChainType.Ethereum) {
-        // wagmi here
-        addr = ethtAccountAddress;
-      } else {
-        // starknet react here
-        addr = starknetAccountAddress;
-      }
-      return addr;
-    })(),
+    address: currentChain === ChainType.Starknet ? starknetAccountAddress : ethtAccountAddress,
+    isConnected: currentChain === ChainType.Starknet ? isStarknetConnected : isEthConnected,
+    isConnecting: currentChain === ChainType.Starknet ? isStarknetConnecting : isEthConnecting,
+    chainId: currentChain === ChainType.Starknet ? starknetChainId : ethChainId,
+    isDisconnected: currentChain === ChainType.Starknet ? isStarknetDisconnected : isEthDisconnected,
+    connector: currentChain === ChainType.Starknet ? starknetConnector : ethConnector,
+    isReconnecting: currentChain === ChainType.Starknet ? isStarknetReconnecting : isEthReconnecting,
+    status: currentChain === ChainType.Starknet ? starknetStatus : ethStatus,
   };
 }
