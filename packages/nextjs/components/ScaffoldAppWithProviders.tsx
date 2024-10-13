@@ -20,7 +20,7 @@ import { Header } from "~~/components/Header";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
 
-const ScaffoldCrossChainApp = ({ children }: { children: React.ReactNode }) => {
+const ScaffoldMultichainApp = ({ children }: { children: React.ReactNode }) => {
   useInitializeNativeCurrencyPrice();
   useNativeCurrencyPrice();
 
@@ -72,6 +72,8 @@ export const ScaffoldAppWithProviders = ({ children }: { children: React.ReactNo
     }
   }, [mounted, lastSelectedChain, setCurrentChain, setLastSelectedChain]);
 
+  if (!mounted) return null;
+
   return (
     <StarknetConfig chains={appChains} provider={provider} connectors={connectors} explorer={starkscan}>
       <WagmiProvider config={wagmiConfig}>
@@ -81,7 +83,7 @@ export const ScaffoldAppWithProviders = ({ children }: { children: React.ReactNo
             theme={mounted ? (isDarkMode ? darkTheme() : lightTheme()) : lightTheme()}
             initialChain={lastEVMChain ? lastEVMChain.id : undefined}
           >
-            <ScaffoldCrossChainApp>{children}</ScaffoldCrossChainApp>
+            <ScaffoldMultichainApp>{children}</ScaffoldMultichainApp>
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
