@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useScaffoldReadContract as useEthScaffoldReadContract } from "@scaffold-eth-2/hooks/scaffold-eth";
 import {
   ContractAbi as ContractAbiEth,
@@ -27,20 +27,17 @@ export function useDynamicReadContract<
 >({
   strk,
   eth,
-  ...readConfig
 }: {
-  strk: { contractName: TContractNameStrk; functionName: TFunctionNameStark; args: any[] };
-  eth: { contractName: TContractNameEth; functionName: TFunctionNameEth; args: any[] };
+  strk: UseStarkScaffoldReadConfig<TAbiStark, TContractNameStrk, TFunctionNameStark>;
+  eth: UseEthScaffoldReadConfig<TContractNameEth, TFunctionNameEth>;
 }) {
   const currentChain = useGlobalState((state: GlobalState) => state.currentChain);
   const starknetResult = useStarkScaffoldReadContract<TAbiStark, TContractNameStrk, TFunctionNameStark>({
     ...strk,
-    ...(readConfig as UseStarkScaffoldReadConfig<TAbiStark, TContractNameStrk, TFunctionNameStark>),
   });
 
   const ethResult = useEthScaffoldReadContract<TContractNameEth, TFunctionNameEth>({
     ...eth,
-    ...(readConfig as UseEthScaffoldReadConfig<TContractNameEth, TFunctionNameEth>),
   });
 
   useEffect(() => {
