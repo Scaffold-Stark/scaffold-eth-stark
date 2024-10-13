@@ -1,9 +1,9 @@
 # Scaffold-ETH-Stark
 
-<h4 align="center">
+<!-- <h4 align="center">
   <a href="">Documentation</a> |
   <a href="">Demo</a>
-</h4>
+</h4> -->
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Starknet and EVM blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
 
