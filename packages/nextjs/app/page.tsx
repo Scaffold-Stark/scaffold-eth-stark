@@ -65,8 +65,6 @@ const Home = () => {
     eth: { contractName: "YourContract", functionName: "greeting", watch: true },
   });
 
-  console.log(greeting);
-
   const { writeAsync, isPending: greetingPending } = useDynamicWriteContract({
     strk: {
       contractName: "YourContract",
@@ -83,7 +81,6 @@ const Home = () => {
   async function handleClick() {
     try {
       await writeAsync();
-      console.log("after click");
       // after transaction successfull, we need refetch the contract data
       await refetchGreeting();
     } catch (error) {
