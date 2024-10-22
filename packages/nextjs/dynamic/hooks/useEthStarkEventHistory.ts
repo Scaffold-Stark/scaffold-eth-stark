@@ -40,7 +40,7 @@ type EthEventHistoryData = {
   >;
 };
 
-export function useDynamicEventHistory<
+export function useEthStarkEventHistory<
   TContractNameEth extends ContractNameEth,
   TContractNameStrk extends ContractNameStrk,
   TEventNameStrk extends ExtractAbiEventNamesStrk<ContractAbiStrk<ContractNameStrk>>,

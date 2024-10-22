@@ -54,23 +54,23 @@ export const ScaffoldAppWithProviders = ({ children }: { children: React.ReactNo
 
   useEffect(() => {
     setMounted(true);
+  }, []);
 
-    if (mounted) {
-      if (!lastSelectedChain) {
-        setCurrentChain(ChainType.Ethereum);
-        setLastSelectedChain(ChainType.Ethereum);
-      } else {
-        // check if last selected chain is evm chain, then need to set last evm chain
-        if (lastSelectedChain == ChainType.Ethereum) {
-          if (lastEVMChain) {
-            setTargetNetwork(lastEVMChain);
-            setLastEVMChain(lastEVMChain);
-          }
+  useEffect(() => {
+    if (!lastSelectedChain) {
+      setCurrentChain(ChainType.Ethereum);
+      setLastSelectedChain(ChainType.Ethereum);
+    } else {
+      // check if last selected chain is evm chain, then need to set last evm chain
+      if (lastSelectedChain == ChainType.Ethereum) {
+        if (lastEVMChain) {
+          setTargetNetwork(lastEVMChain);
+          setLastEVMChain(lastEVMChain);
         }
-        setCurrentChain(lastSelectedChain);
       }
+      setCurrentChain(lastSelectedChain);
     }
-  }, [mounted, lastSelectedChain, setCurrentChain, setLastSelectedChain]);
+  }, [lastSelectedChain, setCurrentChain, setLastSelectedChain]);
 
   if (!mounted) return null;
 

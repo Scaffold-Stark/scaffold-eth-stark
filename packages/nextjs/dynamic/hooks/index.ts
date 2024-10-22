@@ -1,5 +1,5 @@
-import { useDynamicAccount } from "./useDynamicAccount";
-import { useDynamicReadContract } from "./useDynamicReadContract";
-import { useDynamicWriteContract } from "./useDynamicWriteContract";
+import { useEthStarkAccount } from "./useEthStarkAccount";
+import { useEthStarkReadContract } from "./useEthStarkReadContract";
+import { useEthStarkWriteContract } from "./useEthStarkWriteContract";
 
-export { useDynamicReadContract, useDynamicWriteContract, useDynamicAccount };
+export { useEthStarkReadContract, useEthStarkWriteContract, useEthStarkAccount };

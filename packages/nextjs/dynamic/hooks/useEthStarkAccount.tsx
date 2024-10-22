@@ -3,7 +3,7 @@ import { useAccount as useEthAccount } from "wagmi";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
 
-export function useDynamicAccount() {
+export function useEthStarkAccount() {
   const currentChain = useGlobalState(state => state.currentChain);
   const {
     address: starknetAccountAddress,

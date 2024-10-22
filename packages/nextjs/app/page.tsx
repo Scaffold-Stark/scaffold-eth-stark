@@ -1,19 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useDynamicAccount } from "~~/dynamic/hooks/useDynamicAccount";
-import { useDynamicContract } from "~~/dynamic/hooks/useDynamicContract";
-import { useDynamicDeployContract } from "~~/dynamic/hooks/useDynamicDeployContract";
-import { useDynamicEventHistory } from "~~/dynamic/hooks/useDynamicEventHistory";
-import { useDynamicReadContract } from "~~/dynamic/hooks/useDynamicReadContract";
-import { useDynamicTargetNetwork } from "~~/dynamic/hooks/useDynamicTargetNetwork";
-import { useDynamicWriteContract } from "~~/dynamic/hooks/useDynamicWriteContract";
+import { useEthStarkAccount } from "~~/dynamic/hooks/useEthStarkAccount";
+import { useEthStarkContract } from "~~/dynamic/hooks/useEthStarkContract";
+import { useEthStarkDeployContract } from "~~/dynamic/hooks/useEthStarkDeployContract";
+import { useEthStarkEventHistory } from "~~/dynamic/hooks/useEthStarkEventHistory";
+import { useEthStarkReadContract } from "~~/dynamic/hooks/useEthStarkReadContract";
+import { useEthStarkTargetNetwork } from "~~/dynamic/hooks/useEthStarkTargetNetwork";
+import { useEthStarkWriteContract } from "~~/dynamic/hooks/useEthStarkWriteContract";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 
 const Home = () => {
   const currentChain = useGlobalState(state => state.currentChain);
-  const { address } = useDynamicAccount();
-  const targetNetwork = useDynamicTargetNetwork();
+  const { address } = useEthStarkAccount();
+  const targetNetwork = useEthStarkTargetNetwork();
   const [greetingState, setGreetingState] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,7 +21,7 @@ const Home = () => {
     data: contractData,
     isLoading: contractLoading,
     error: contractError,
-  } = useDynamicContract({
+  } = useEthStarkContract({
     eth: {
       contractName: "YourContract",
     },
@@ -34,12 +34,12 @@ const Home = () => {
     data: deployedContractInfo,
     isLoading: deployedContractLoading,
     error: deployedContractError,
-  } = useDynamicDeployContract({
+  } = useEthStarkDeployContract({
     eth: { contractName: "YourContract" },
     strk: { contractName: "YourContract" },
   });
 
-  const { data: eventHistoryData, isLoading: eventHistoryLoading } = useDynamicEventHistory({
+  const { data: eventHistoryData, isLoading: eventHistoryLoading } = useEthStarkEventHistory({
     strk: {
       contractName: "YourContract",
       eventName: "contracts::YourContract::YourContract::GreetingChanged",
@@ -60,12 +60,12 @@ const Home = () => {
     isLoading: isGreetingLoading,
     data: greeting,
     refetch: refetchGreeting,
-  } = useDynamicReadContract({
+  } = useEthStarkReadContract({
     strk: { contractName: "YourContract", functionName: "greeting", watch: true, args: [] },
     eth: { contractName: "YourContract", functionName: "greeting", watch: true },
   });
 
-  const { writeAsync, isPending: greetingPending } = useDynamicWriteContract({
+  const { writeAsync, isPending: greetingPending } = useEthStarkWriteContract({
     strk: {
       contractName: "YourContract",
       functionName: "set_greeting",
