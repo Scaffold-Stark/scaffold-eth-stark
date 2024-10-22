@@ -15,6 +15,7 @@ export type SharedConfig = {
     onlyLocalBurnerWallet: boolean;
     rpcProviderUrl: string;
     walletAutoConnect: boolean;
+    autoConnectTTL: number;
   };
 };
 
@@ -51,7 +52,7 @@ const sharedConfig = {
 
     // Only show the Burner Wallet when running on devnet
     onlyLocalBurnerWallet: false,
-
+    autoConnectTTL: 60000,
     rpcProviderUrl: process.env.NEXT_PUBLIC_PROVIDER_URL || "",
 
     /**
