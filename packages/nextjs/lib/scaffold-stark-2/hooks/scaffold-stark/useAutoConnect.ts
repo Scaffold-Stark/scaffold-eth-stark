@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import scaffoldConfig from "@scaffold-stark-2/scaffold.config";
 import type { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
+import { LAST_CONNECTED_TIME_LOCALSTORAGE_KEY } from "@scaffold-stark-2/utils/Constants";
 import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
 import { useConnect } from "@starknet-react/core";
 import { useReadLocalStorage } from "usehooks-ts";
@@ -11,7 +12,7 @@ import { useReadLocalStorage } from "usehooks-ts";
 export const useAutoConnect = (): void => {
   const savedConnector = useReadLocalStorage<{ id: string; ix?: number }>("lastUsedConnector");
 
-  const lastConnectionTime = useReadLocalStorage<number>("lastConnectedTime");
+  const lastConnectionTime = useReadLocalStorage<number>(LAST_CONNECTED_TIME_LOCALSTORAGE_KEY);
 
   const { connect, connectors } = useConnect();
 
