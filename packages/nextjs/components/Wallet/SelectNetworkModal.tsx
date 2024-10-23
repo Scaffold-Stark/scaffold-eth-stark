@@ -88,20 +88,29 @@ export default function SelectNetWorkModal() {
     }, 400);
   };
 
-  const handleEthereumNetworkClick = (network: ChainWithAttributes) => {
+  const handleEthereumNetworkClick = async (network: ChainWithAttributes) => {
     setEthActiveNetwork(network);
     setCurrentChain(ChainType.Ethereum);
     if (isEVMConnected) {
-      switchChain?.({ chainId: network.id });
+      await switchChain?.({ chainId: network.id });
     }
     setTargetNetwork(network);
     setLastEVMChain(network);
     setLastEVMChainGlobalState(network);
+
+    setAnimate(false);
+    setTimeout(() => {
+      setSwitchNetworkModalOpen(false);
+    }, 400);
   };
 
   const handleStarknetClick = () => {
     setLastSelectedChain(ChainType.Starknet);
     setCurrentChain(ChainType.Starknet);
+    setAnimate(false);
+    setTimeout(() => {
+      setSwitchNetworkModalOpen(false);
+    }, 400);
   };
 
   return (
