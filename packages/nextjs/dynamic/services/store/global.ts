@@ -13,13 +13,18 @@ import { create } from "zustand";
 export type GlobalState = {
   currentChain: string;
   lastEVMChain: ChainWithAttributes | null;
+  switchNetworkModalOpen: boolean;
   setCurrentChain: (newSelectedChain: string) => void;
   setLastEVMChain: (newLastEVMChain: ChainWithAttributes) => void;
+  setSwitchNetworkModalOpen: (newSwitchNetworkModalOpen: boolean) => void;
 };
 
 export const useGlobalState = create<GlobalState>((set: any) => ({
   currentChain: "",
   lastEVMChain: null,
+  switchNetworkModalOpen: false,
   setCurrentChain: (newSelectedChain: string): void => set(() => ({ currentChain: newSelectedChain })),
   setLastEVMChain: (newLastEVMChain: ChainWithAttributes): void => set(() => ({ lastEVMChain: newLastEVMChain })),
+  setSwitchNetworkModalOpen: (newSwitchNetworkModalOpen: boolean): void =>
+    set(() => ({ switchNetworkModalOpen: newSwitchNetworkModalOpen })),
 }));

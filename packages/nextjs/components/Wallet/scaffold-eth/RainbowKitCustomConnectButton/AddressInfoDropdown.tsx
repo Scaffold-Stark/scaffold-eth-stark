@@ -16,6 +16,7 @@ import {
   DocumentDuplicateIcon,
   QrCodeIcon,
 } from "@heroicons/react/24/outline";
+import { useGlobalState } from "~~/dynamic/services/store/global";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -33,6 +34,8 @@ export const AddressInfoDropdown = ({
   blockExplorerAddressLink,
 }: AddressInfoDropdownProps) => {
   const { disconnect } = useDisconnect();
+  const { setSwitchNetworkModalOpen } = useGlobalState();
+
   const checkSumAddress = getAddress(address);
 
   const [addressCopied, setAddressCopied] = useState(false);
@@ -59,7 +62,6 @@ export const AddressInfoDropdown = ({
           tabIndex={0}
           className="dropdown-content menu z-[2] p-2 mt-2 shadow-center shadow-accent bg-base-200 rounded-box gap-1"
         >
-          <NetworkOptions hidden={!selectingNetwork} />
           <li className={selectingNetwork ? "hidden" : ""}>
             {addressCopied ? (
               <div className="btn-sm !rounded-xl flex gap-3 py-3">
@@ -96,7 +98,11 @@ export const AddressInfoDropdown = ({
             </label>
           </li>
           <li className={selectingNetwork ? "hidden" : ""}>
-            <button className="menu-item btn-sm !rounded-xl flex gap-3 py-3" type="button">
+            <button
+              className="menu-item btn-sm !rounded-xl flex gap-3 py-3"
+              type="button"
+              onClick={() => setSwitchNetworkModalOpen(true)}
+            >
               <ArrowTopRightOnSquareIcon className="h-6 w-4 ml-2 sm:ml-0" />
               <a
                 target="_blank"
@@ -108,19 +114,20 @@ export const AddressInfoDropdown = ({
               </a>
             </button>
           </li>
-          {allowedNetworks.length > 1 ? (
-            <li className={selectingNetwork ? "hidden" : ""}>
-              <button
-                className="btn-sm !rounded-xl flex gap-3 py-3"
-                type="button"
-                onClick={() => {
-                  setSelectingNetwork(true);
-                }}
-              >
-                <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
-              </button>
-            </li>
-          ) : null}
+          <li>
+            <button
+              className="menu-item btn-sm !rounded-xl flex gap-3 py-3"
+              type="button"
+              onClick={() => {
+                setSwitchNetworkModalOpen(true);
+                closeDropdown();
+              }}
+            >
+              <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" />{" "}
+              <span className="whitespace-nowrap">Switch Network</span>
+            </button>
+          </li>
+
           <li className={selectingNetwork ? "hidden" : ""}>
             <button
               className="menu-item text-error btn-sm !rounded-xl flex gap-3 py-3"

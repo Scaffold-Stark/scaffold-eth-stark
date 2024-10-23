@@ -24,6 +24,7 @@ import {
   QrCodeIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
+import { useGlobalState } from "~~/dynamic/services/store/global";
 
 const allowedNetworks = getTargetNetworks();
 
@@ -41,6 +42,8 @@ export const AddressInfoDropdown = ({
   blockExplorerAddressLink,
 }: AddressInfoDropdownProps) => {
   const { disconnect } = useDisconnect();
+  const setSwitchNetworkModalOpen = useGlobalState(state => state.setSwitchNetworkModalOpen);
+
   const [addressCopied, setAddressCopied] = useState(false);
   const { data: profile } = useConditionalStarkProfile(address);
   const { chain } = useNetwork();
@@ -159,6 +162,20 @@ export const AddressInfoDropdown = ({
               </button>
             </li>
           ) : null}
+
+          <li className={selectingNetwork ? "hidden" : ""}>
+            <button
+              className="menu-item btn-sm !rounded-xl flex gap-3 py-3"
+              type="button"
+              onClick={() => {
+                setSwitchNetworkModalOpen(true);
+                closeDropdown();
+              }}
+            >
+              <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" />
+              <span className="whitespace-nowrap">Switch Nework</span>
+            </button>
+          </li>
 
           {showBurnerAccounts &&
             createPortal(

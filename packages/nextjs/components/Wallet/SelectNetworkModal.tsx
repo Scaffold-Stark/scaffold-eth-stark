@@ -33,9 +33,8 @@ export default function SelectNetWorkModal() {
   } = useSwitchChain();
   const { isConnected: isEVMConnected } = useAccount();
   const { currentChain, setLastEVMChain: setLastEVMChainGlobalState } = useGlobalState(state => state);
-  const setCurrentChain = useGlobalState(state => state.setCurrentChain);
+  const { setCurrentChain, setSwitchNetworkModalOpen, switchNetworkModalOpen } = useGlobalState(state => state);
 
-  const [open, setOpen] = useState<boolean>(false);
   const [animate, setAnimate] = useState(false);
   const [activeNetwork, setActiveNetwork] = useState<string>("");
   const [ethActiveNetwork, setEthActiveNetwork] = useState<ChainWithAttributes | null>(null);
@@ -79,13 +78,13 @@ export default function SelectNetWorkModal() {
     }
   }, [currentChain, evmTargetNetwork, isSwitchingError, isSwitchingSuccess]);
 
-  useEffect(() => setAnimate(open), [open]);
+  useEffect(() => setAnimate(switchNetworkModalOpen), [switchNetworkModalOpen]);
 
   const closeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setAnimate(false);
     setTimeout(() => {
-      setOpen(false);
+      setSwitchNetworkModalOpen(false);
     }, 400);
   };
 
@@ -109,7 +108,7 @@ export default function SelectNetWorkModal() {
     <>
       <div
         className="flex items-center justify-between cursor-pointer rounded bg-[#1C1F28] py-1 px-4 h-[40px] w-[80px]"
-        onClick={() => setOpen(true)}
+        onClick={() => setSwitchNetworkModalOpen(true)}
       >
         <Image
           src={activeNetwork === ChainType.Ethereum ? EthNetwork : StrkNetwork}
@@ -123,7 +122,7 @@ export default function SelectNetWorkModal() {
       </div>
 
       <GenericModal
-        isOpen={open}
+        isOpen={switchNetworkModalOpen}
         animate={animate}
         onClose={closeModal}
         className="bg-modal-network w-fit p-6 rounded-lg"
