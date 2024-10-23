@@ -16,6 +16,7 @@ import { useTheme } from "next-themes";
 import { Toaster } from "react-hot-toast";
 import { useLocalStorage } from "usehooks-ts";
 import { WagmiProvider } from "wagmi";
+import { useChainId } from "wagmi";
 import { Header } from "~~/components/Header";
 import { useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
@@ -23,6 +24,28 @@ import { ChainType } from "~~/dynamic/types/chains";
 const ScaffoldMultichainApp = ({ children }: { children: React.ReactNode }) => {
   useInitializeNativeCurrencyPrice();
   useNativeCurrencyPrice();
+  const setTargetNetwork = useEthGlobalState(state => state.setTargetNetwork);
+
+  const chainId = useChainId();
+  const [lastSelectedChain, setLastSelectedChain] = useLocalStorage<string>("lastSelectedChain", "");
+  const [lastEVMChain, setLastEVMChain] = useLocalStorage<ChainWithAttributes | null>("lastEVMChain", null);
+  const setCurrentChain = useGlobalState(state => state.setCurrentChain);
+
+  useEffect(() => {
+    if (!lastSelectedChain) {
+      setCurrentChain(ChainType.Ethereum);
+      setLastSelectedChain(ChainType.Ethereum);
+    } else {
+      // check if last selected chain is evm chain, then need to set last evm chain
+      if (lastSelectedChain == ChainType.Ethereum) {
+        if (lastEVMChain) {
+          setTargetNetwork(lastEVMChain);
+          setLastEVMChain(lastEVMChain);
+        }
+      }
+      setCurrentChain(lastSelectedChain);
+    }
+  }, [lastSelectedChain, chainId]);
 
   return (
     <>
@@ -47,32 +70,13 @@ export const ScaffoldAppWithProviders = ({ children }: { children: React.ReactNo
   const { resolvedTheme } = useTheme();
   const isDarkMode = resolvedTheme === "dark";
   const [mounted, setMounted] = useState(false);
-  const setCurrentChain = useGlobalState(state => state.setCurrentChain);
-  const [lastSelectedChain, setLastSelectedChain] = useLocalStorage<string>("lastSelectedChain", "");
   const [lastEVMChain, setLastEVMChain] = useLocalStorage<ChainWithAttributes | null>("lastEVMChain", null);
-  const setTargetNetwork = useEthGlobalState(state => state.setTargetNetwork);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!lastSelectedChain) {
-      setCurrentChain(ChainType.Ethereum);
-      setLastSelectedChain(ChainType.Ethereum);
-    } else {
-      // check if last selected chain is evm chain, then need to set last evm chain
-      if (lastSelectedChain == ChainType.Ethereum) {
-        if (lastEVMChain) {
-          setTargetNetwork(lastEVMChain);
-          setLastEVMChain(lastEVMChain);
-        }
-      }
-      setCurrentChain(lastSelectedChain);
-    }
-  }, [lastSelectedChain, setCurrentChain, setLastSelectedChain]);
-
-  if (!mounted) return null;
+  if (!mounted) return <div></div>;
 
   return (
     <StarknetConfig chains={appChains} provider={provider} connectors={connectors} explorer={starkscan}>
