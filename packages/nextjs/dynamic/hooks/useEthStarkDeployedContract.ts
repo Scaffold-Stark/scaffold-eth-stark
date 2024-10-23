@@ -6,7 +6,7 @@ import { ContractName as ContractNameEth } from "@scaffold-eth-2/utils/scaffold-
 import { useDeployedContractInfo as useStrkDeployedContractInfo } from "@scaffold-stark-2/hooks/scaffold-stark";
 import { ContractName as ContractNameStrk } from "@scaffold-stark-2/utils/scaffold-stark/contract";
 
-export function useEthStarkDeployContract<
+export function useEthStarkDeployedContract<
   TContractNameEth extends ContractNameEth,
   TContractNameStrk extends ContractNameStrk,
 >({ eth, strk }: { eth: { contractName: TContractNameEth }; strk: { contractName: TContractNameStrk } }) {

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useEthStarkAccount } from "~~/dynamic/hooks/useEthStarkAccount";
 import { useEthStarkContract } from "~~/dynamic/hooks/useEthStarkContract";
-import { useEthStarkDeployContract } from "~~/dynamic/hooks/useEthStarkDeployContract";
+import { useEthStarkDeployedContract } from "~~/dynamic/hooks/useEthStarkDeployedContract";
 import { useEthStarkEventHistory } from "~~/dynamic/hooks/useEthStarkEventHistory";
 import { useEthStarkReadContract } from "~~/dynamic/hooks/useEthStarkReadContract";
 import { useEthStarkTargetNetwork } from "~~/dynamic/hooks/useEthStarkTargetNetwork";
@@ -34,7 +34,7 @@ const Home = () => {
     data: deployedContractInfo,
     isLoading: deployedContractLoading,
     error: deployedContractError,
-  } = useEthStarkDeployContract({
+  } = useEthStarkDeployedContract({
     eth: { contractName: "YourContract" },
     strk: { contractName: "YourContract" },
   });
