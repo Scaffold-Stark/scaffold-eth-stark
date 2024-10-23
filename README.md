@@ -1,9 +1,8 @@
 # Scaffold-ETH-Stark
 
-<!-- <h4 align="center">
-  <a href="">Documentation</a> |
-  <a href="">Demo</a>
-</h4> -->
+<h4 align="center">
+  <a href="https://docs.scaffoldstark.com/eth-stark/">Documentation</a> |
+</h4>
 
 🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on Starknet and EVM blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
 
@@ -65,8 +64,8 @@ If your Starknet Foundry version is not `0.31.0`, you need to install it.
 ## Compatible versions
 
 - Starknet-devnet - v0.2.0
-- Scarb - v2.8.2
-- Snforge - v0.30.0
+- Scarb - v2.8.3
+- Snforge - v0.31.0
 - Cairo - v2.8.2
 - Rpc - v0.7.1
 
@@ -113,6 +112,13 @@ This command deploys a sample smart contract to the local network. The contract 
 
 By default, `Scaffold-Stark` uses the first prefunded account from `starknet-devnet` as the deployer address for Starknet contracts. For Ethereum contracts, when deploying to the local chain, `Scaffold-ETH 2` creates a keystore account using Anvil's last address private key. This keystore account is named `scaffold-eth-local` with the password `localhost`.
 
+> **Note**: If you want to deploy to a network beside devnet
+> For starknet, you need to fill the env file under `./packages/snfoundry/.env` with the correct values.
+> For ethereum, you need to fill the env file under `./packages/foundry/.env` with the correct values.
+>
+> Then for starknet, run `yarn deploy:strk --network ${YOUR_NETWORK}`
+> For ethereum, run `yarn deploy:eth --network ${YOUR_NETWORK}`
+
 6. On a fourth terminal, start your NextJS app:
 
 ```bash
@@ -123,7 +129,7 @@ Visit your app on: `http://localhost:3000`. You can tweak the app config in `pac
 
 ## Documentation
 
-> PROGRESSING...
+Visit our [docs](https://docs.scaffoldstark.com/eth-stark/) to learn how to start building with Scaffold-Eth-Stark.
 
 ## Contributing to Scaffold-ETH-Stark
 
