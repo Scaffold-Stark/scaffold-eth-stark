@@ -27,6 +27,7 @@
     "test:eth": "yarn workspace @se-2/foundry test",
     "generate:eth": "yarn workspace @se-2/foundry generate",
     "verify:eth": "yarn workspace @se-2/foundry verify",
+    "verify:strk": "yarn workspace @ss-2/snfoundry verify",
     "postinstall": "husky install",
     "next:build": "yarn workspace @ses/nextjs build",
     "next:check-types": "yarn workspace @ses/nextjs check-types",
