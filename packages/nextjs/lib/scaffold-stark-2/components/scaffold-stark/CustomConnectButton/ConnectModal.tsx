@@ -62,6 +62,7 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
       connector.burnerAccount = burnerAccounts[ix];
       connect({ connector });
       setLastConnector({ id: connector.id, ix });
+
       closeModal(e);
     }
   }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BlockieAvatar } from "../BlockieAvatar";
 import GenericModal from "./GenericModal";
 import { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
+import { LAST_CONNECTED_TIME_LOCALSTORAGE_KEY } from "@scaffold-stark-2/utils/Constants";
 import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
 import { Connector, useConnect } from "@starknet-react/core";
 import { useTheme } from "next-themes";
@@ -44,6 +45,7 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
       initializeWithValue: false,
     },
   );
+  const [, setLastConnectionTime] = useLocalStorage<number>(LAST_CONNECTED_TIME_LOCALSTORAGE_KEY, 0);
 
   function handleConnectWallet(e: React.MouseEvent<HTMLButtonElement>, connector: Connector): void {
     if (connector.id === "burner-wallet") {
@@ -53,6 +55,7 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
 
     connect({ connector });
     setLastConnector({ id: connector.id });
+    setLastConnectionTime(Date.now());
     closeModal(e);
   }
 
@@ -62,6 +65,7 @@ const ConnectModal = ({ isOpen, onClose }: Props) => {
       connector.burnerAccount = burnerAccounts[ix];
       connect({ connector });
       setLastConnector({ id: connector.id, ix });
+      setLastConnectionTime(Date.now());
       closeModal(e);
     }
   }

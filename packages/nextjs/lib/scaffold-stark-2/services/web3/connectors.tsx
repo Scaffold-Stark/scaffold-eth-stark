@@ -1,5 +1,6 @@
 import { BurnerConnector } from "./stark-burner/BurnerConnector";
 import scaffoldConfig from "@scaffold-stark-2/scaffold.config";
+import { LAST_CONNECTED_TIME_LOCALSTORAGE_KEY } from "@scaffold-stark-2/utils/Constants";
 import { getTargetNetworks } from "@scaffold-stark-2/utils/scaffold-stark";
 import { InjectedConnector, argent, braavos } from "@starknet-react/core";
 
@@ -12,6 +13,7 @@ function withDisconnectWrapper(connector: InjectedConnector) {
   const connectorDisconnect = connector.disconnect;
   const _disconnect = (): Promise<void> => {
     localStorage.removeItem("lastUsedConnector");
+    localStorage.removeItem(LAST_CONNECTED_TIME_LOCALSTORAGE_KEY);
     return connectorDisconnect();
   };
   connector.disconnect = _disconnect.bind(connector);

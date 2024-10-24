@@ -8,7 +8,6 @@ import { ChainType } from "~~/dynamic/types/chains";
 
 export const Header = () => {
   const currentChain = useGlobalState(state => state.currentChain);
-
   return (
     <div className="px-5 py-3">
       <div className="flex items-center justify-end gap-3">

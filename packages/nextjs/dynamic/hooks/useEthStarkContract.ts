@@ -7,7 +7,7 @@ import { useScaffoldContract as useStrkScaffoldContract } from "@scaffold-stark-
 import { ContractName as ContractNameStrk } from "@scaffold-stark-2/utils/scaffold-stark/contract";
 import { GetWalletClientReturnType } from "wagmi/actions";
 
-export function useDynamicContract<
+export function useEthStarkContract<
   TContractNameEth extends ContractNameEth,
   TContractNameStrk extends ContractNameStrk,
   TWalletClient extends Exclude<GetWalletClientReturnType, null> | undefined,

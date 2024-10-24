@@ -18,7 +18,7 @@ import type { ExtractAbiFunctionNames as ExtractAbiFunctionNamesEth } from "abit
 import { GlobalState, useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
 
-export function useDynamicReadContract<
+export function useEthStarkReadContract<
   TContractNameEth extends ContractNameEth,
   TContractNameStrk extends ContractNameStark,
   TFunctionNameEth extends ExtractAbiFunctionNamesEth<ContractAbiEth<TContractNameEth>, "pure" | "view">,

@@ -20,7 +20,7 @@ import { UseWriteContractParameters } from "wagmi";
 import { GlobalState, useGlobalState } from "~~/dynamic/services/store/global";
 import { ChainType } from "~~/dynamic/types/chains";
 
-export function useDynamicWriteContract<
+export function useEthStarkWriteContract<
   TContractNameEth extends ContractNameEth,
   TContractNameStrk extends ContractNameStark,
   TFunctionNameEth extends ExtractAbiFunctionNamesEth<ContractAbiEth<TContractNameEth>, "nonpayable" | "payable">,

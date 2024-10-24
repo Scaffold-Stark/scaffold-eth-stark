@@ -378,7 +378,7 @@ const decodeParamsWithType = (paramType: string, param: any): unknown => {
         : `Err(${parseParamWithType(error, result.unwrap(), isRead)})`;
     }, param);
   } else if (isCairoContractAddress(paramType)) {
-    return tryParsingParamReturnObject(getChecksumAddress, `0x${param.toString(16)}`);
+    return tryParsingParamReturnObject(validateAndParseAddress, param);
   } else if (isCairoU256(paramType)) {
     return tryParsingParamReturnObject(uint256.uint256ToBN, param);
   } else if (isCairoByteArray(paramType)) {
@@ -606,12 +606,10 @@ export function parseFunctionParams({
     args: inputs,
   });
 
-  console.debug({ formattedInputs });
-
   formattedInputs.forEach(inputItem => {
     const { type: inputType, value: inputValue } = inputItem;
 
-    parsedInputs.push(parseParamWithType(inputType, inputValue, isRead, !!isReadArgsParsing));
+    parsedInputs.push(deepParseValues(inputValue, isRead, inputType, !!isReadArgsParsing));
   });
 
   return parsedInputs;
@@ -641,7 +639,10 @@ function formatInputForParsing({ abi, abiFunction, args }: { abi: Abi; abiFuncti
         const structValue = arg[argKey];
         return [argKey, _formatInput(structValue, argIndex, variants as AbiParameter[])];
       });
-      return { type: structName, value: { variant: Object.fromEntries } };
+      return {
+        type: structName,
+        value: { variant: Object.fromEntries(formattedEntries) },
+      };
     }
 
     const { members } = structDef as AbiStruct;
