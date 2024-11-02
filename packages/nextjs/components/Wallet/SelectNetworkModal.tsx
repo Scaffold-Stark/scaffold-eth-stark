@@ -70,10 +70,19 @@ export default function SelectNetWorkModal() {
         setEthActiveNetwork(evmTargetNetwork);
       }
       if (isSwitchingSuccess) {
-        setCurrentChain(ChainType.Ethereum);
         setLastSelectedChain(ChainType.Ethereum);
         setActiveNetwork(ChainType.Ethereum);
-        setEthActiveNetwork(evmTargetNetwork);
+        evmTargetNetwork;
+
+        setEthActiveNetwork(ethActiveNetwork);
+        setCurrentChain(ChainType.Ethereum);
+        setTargetNetwork(ethActiveNetwork!);
+        setLastEVMChain(ethActiveNetwork);
+        setLastEVMChainGlobalState(ethActiveNetwork!);
+        setAnimate(false);
+        setTimeout(() => {
+          setSwitchNetworkModalOpen(false);
+        }, 400);
       }
     }
   }, [currentChain, evmTargetNetwork, isSwitchingError, isSwitchingSuccess]);
@@ -89,19 +98,21 @@ export default function SelectNetWorkModal() {
   };
 
   const handleEthereumNetworkClick = async (network: ChainWithAttributes) => {
-    setEthActiveNetwork(network);
-    setCurrentChain(ChainType.Ethereum);
     if (isEVMConnected) {
-      await switchChain?.({ chainId: network.id });
+      switchChain?.({ chainId: network.id });
+      setEthActiveNetwork(network);
+      setLastSelectedChain(ChainType.Ethereum);
+    } else {
+      setEthActiveNetwork(network);
+      setCurrentChain(ChainType.Ethereum);
+      setTargetNetwork(network);
+      setLastEVMChain(network);
+      setLastEVMChainGlobalState(network);
+      setAnimate(false);
+      setTimeout(() => {
+        setSwitchNetworkModalOpen(false);
+      }, 400);
     }
-    setTargetNetwork(network);
-    setLastEVMChain(network);
-    setLastEVMChainGlobalState(network);
-
-    setAnimate(false);
-    setTimeout(() => {
-      setSwitchNetworkModalOpen(false);
-    }, 400);
   };
 
   const handleStarknetClick = () => {
