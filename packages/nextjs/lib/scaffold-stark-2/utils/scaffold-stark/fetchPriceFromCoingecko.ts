@@ -20,13 +20,7 @@ const updatePriceCache = async (symbol: string, retries = 3): Promise<number> =>
   let attempt = 0;
   while (attempt < retries) {
     try {
-      let apiUrl = "";
-      if (symbol === "ETH") {
-        apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`;
-      } else if (symbol === "STRK") {
-        apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=starknet&vs_currencies=usd`;
-      }
-      const response = await fetch(apiUrl);
+      const response = await fetch(`/api/price/${symbol}`);
       const data = await response.json();
       const price = symbol === "ETH" ? data.ethereum.usd : data.starknet.usd;
       priceCache[symbol] = price;
