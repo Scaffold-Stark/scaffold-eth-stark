@@ -15,7 +15,7 @@ export type GlobalState = {
   lastEVMChain: ChainWithAttributes | null;
   switchNetworkModalOpen: boolean;
   setCurrentChain: (newSelectedChain: string) => void;
-  setLastEVMChain: (newLastEVMChain: ChainWithAttributes) => void;
+  setLastEVMChain: (newLastEVMChain: ChainWithAttributes | null) => void;
   setSwitchNetworkModalOpen: (newSwitchNetworkModalOpen: boolean) => void;
 };
 
@@ -24,7 +24,7 @@ export const useGlobalState = create<GlobalState>((set: any) => ({
   lastEVMChain: null,
   switchNetworkModalOpen: false,
   setCurrentChain: (newSelectedChain: string): void => set(() => ({ currentChain: newSelectedChain })),
-  setLastEVMChain: (newLastEVMChain: ChainWithAttributes): void => set(() => ({ lastEVMChain: newLastEVMChain })),
+  setLastEVMChain: (newLastEVMChain: ChainWithAttributes | null): void => set(() => ({ lastEVMChain: newLastEVMChain })),
   setSwitchNetworkModalOpen: (newSwitchNetworkModalOpen: boolean): void =>
     set(() => ({ switchNetworkModalOpen: newSwitchNetworkModalOpen })),
 }));

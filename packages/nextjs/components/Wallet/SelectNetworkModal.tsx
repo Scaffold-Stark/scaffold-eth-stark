@@ -90,6 +90,7 @@ export default function SelectNetWorkModal() {
 
   const handleEthereumNetworkClick = async (network: ChainWithAttributes) => {
     setEthActiveNetwork(network);
+    setLastSelectedChain(ChainType.Ethereum);
     setCurrentChain(ChainType.Ethereum);
     if (isEVMConnected) {
       await switchChain?.({ chainId: network.id });
@@ -105,8 +106,11 @@ export default function SelectNetWorkModal() {
   };
 
   const handleStarknetClick = () => {
+    setEthActiveNetwork(null);
     setLastSelectedChain(ChainType.Starknet);
     setCurrentChain(ChainType.Starknet);
+    setLastEVMChain(null);
+    setLastEVMChainGlobalState(null);
     setAnimate(false);
     setTimeout(() => {
       setSwitchNetworkModalOpen(false);
