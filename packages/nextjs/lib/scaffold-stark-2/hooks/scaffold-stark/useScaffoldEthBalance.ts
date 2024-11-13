@@ -1,9 +1,9 @@
-import { Address } from "@starknet-react/chains";
 import { useDeployedContractInfo } from "./useDeployedContractInfo";
+import { Address } from "@starknet-react/chains";
 import { useReadContract } from "@starknet-react/core";
-import { BlockNumber } from "starknet";
 import { Abi } from "abi-wan-kanabi";
 import { formatUnits } from "ethers";
+import { BlockNumber } from "starknet";
 
 type UseScaffoldEthBalanceProps = {
   address?: Address | string;

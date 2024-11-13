@@ -1,6 +1,8 @@
-import { useDeployedContractInfo, useTransactor } from "@scaffold-stark-2/hooks/scaffold-stark";
-import { useScaffoldWriteContract } from "@scaffold-stark-2/hooks/scaffold-stark/useScaffoldWriteContract";
-import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
+import { useDeployedContractInfo } from "../useDeployedContractInfo";
+import { useScaffoldWriteContract } from "../useScaffoldWriteContract";
+import { useTargetNetwork } from "../useTargetNetwork";
+import { useTransactor } from "../useTransactor";
+import "@scaffold-stark-2/hooks/scaffold-stark";
 import { useSendTransaction } from "@starknet-react/core";
 import { act, renderHook } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";

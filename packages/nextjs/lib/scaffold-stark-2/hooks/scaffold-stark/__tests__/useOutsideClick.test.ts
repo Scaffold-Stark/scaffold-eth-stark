@@ -1,5 +1,5 @@
-import { renderHook } from "@testing-library/react";
 import { useOutsideClick } from "../useOutsideClick";
+import { renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("useOutsideClick", () => {
@@ -54,10 +54,7 @@ describe("useOutsideClick", () => {
     // Unmount the hook
     unmount();
 
-    expect(removeEventListenerSpy).toHaveBeenCalledWith(
-      "click",
-      expect.any(Function),
-    );
+    expect(removeEventListenerSpy).toHaveBeenCalledWith("click", expect.any(Function));
 
     removeEventListenerSpy.mockRestore();
   });

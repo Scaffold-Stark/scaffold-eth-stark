@@ -1,4 +1,4 @@
-import { useDeployedContractInfo } from "@scaffold-stark-2/hooks/scaffold-stark";
+import { useDeployedContractInfo } from "./useDeployedContractInfo";
 import {
   AbiFunctionOutputs,
   ContractAbi,

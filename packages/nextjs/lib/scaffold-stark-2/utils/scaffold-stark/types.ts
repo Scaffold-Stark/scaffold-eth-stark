@@ -16,9 +16,9 @@ import type {
   CairoVoid,
 } from "abi-wan-kanabi/dist/kanabi";
 
-export const isCairoInt = (type: string): type is CairoInt => /^core::integer::(u|i)(8|16|32)$/.test(type);
+export const isCairoInt = (type: string): type is CairoInt => /core::integer::(u|i)(8|16|32)$/.test(type);
 
-export const isCairoBigInt = (type: string): type is CairoBigInt => /^core::integer::(u|i)(64|128)$/.test(type);
+export const isCairoBigInt = (type: string): type is CairoBigInt => /core::integer::(u|i)(64|128)$/.test(type);
 
 export const isCairoU256 = (type: string): type is CairoU256 => type.includes("core::integer::u256");
 

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useAccount } from "@scaffold-stark-2/hooks/useAccount";
+import { useAccount } from "../useAccount";
 import scaffoldConfig from "@scaffold-stark-2/scaffold.config";
 import { useGlobalState } from "@scaffold-stark-2/services/store/store";
 import { ChainWithAttributes } from "@scaffold-stark-2/utils/scaffold-stark";
 
-// import { NETWORKS_EXTRA_DATA } from "@scaffold-stark-2/utils/scaffold-stark";
+// import { NETWORKS_EXTRA_DATA } from "~~/utils/scaffold-stark";
 
 /**
  * Retrieves the connected wallet's network from scaffold.config or defaults to the 0th network in the list if the wallet is not connected.

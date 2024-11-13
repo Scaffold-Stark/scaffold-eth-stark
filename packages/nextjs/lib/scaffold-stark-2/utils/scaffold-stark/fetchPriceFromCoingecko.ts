@@ -1,5 +1,3 @@
-import { ChainWithAttributes } from "@scaffold-stark-2/utils/scaffold-stark";
-
 // Cache object to store the last fetched prices based on currency symbols
 const priceCache: Record<string, number> = {};
 

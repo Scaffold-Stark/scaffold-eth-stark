@@ -1,6 +1,6 @@
-import { useDeployedContractInfo } from "@scaffold-stark-2/hooks/scaffold-stark/useDeployedContractInfo";
-import { useScaffoldContract } from "@scaffold-stark-2/hooks/scaffold-stark/useScaffoldContract";
-import { useTargetNetwork } from "@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork";
+import { useDeployedContractInfo } from "../useDeployedContractInfo";
+import { useScaffoldContract } from "../useScaffoldContract";
+import { useTargetNetwork } from "../useTargetNetwork";
 import { useAccount } from "@scaffold-stark-2/hooks/useAccount";
 import { ContractName } from "@scaffold-stark-2/utils/scaffold-stark/contract";
 import { renderHook } from "@testing-library/react";

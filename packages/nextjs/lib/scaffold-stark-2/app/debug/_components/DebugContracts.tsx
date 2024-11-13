@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { ContractUI } from "@scaffold-stark-2/app/debug/_components/contract";
+import { ContractUI } from "./contract";
 import { ContractName } from "@scaffold-stark-2/utils/scaffold-stark/contract";
 import { getAllContracts } from "@scaffold-stark-2/utils/scaffold-stark/contractsData";
 import { useLocalStorage } from "usehooks-ts";

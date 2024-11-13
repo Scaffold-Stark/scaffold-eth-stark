@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { displayTxResult } from "@scaffold-stark-2/app/debug/_components/contract";
+import { displayTxResult } from "./utilsDisplay";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { InvokeTransactionReceiptResponse } from "starknet";
 import { CheckCircleIcon, DocumentDuplicateIcon } from "@heroicons/react/24/outline";
@@ -19,7 +19,12 @@ export const TxReceipt = (
           />
         ) : (
           <CopyToClipboard
-            text={displayTxResult(txResult, false) as string}
+            text={
+              displayTxResult({
+                displayContent: txResult,
+                asText: false,
+              }) as string
+            }
             onCopy={() => {
               setTxResultCopied(true);
               setTimeout(() => {
@@ -40,7 +45,7 @@ export const TxReceipt = (
           <strong>Transaction Receipt</strong>
         </div>
         <div className="collapse-content overflow-auto bg-transparent rounded-t-none rounded-3xl">
-          <pre className="text-xs pt-4">{displayTxResult(txResult, false)}</pre>
+          <pre className="text-xs pt-4">{displayTxResult({ displayContent: txResult, asText: false })}</pre>
         </div>
       </div>
     </div>

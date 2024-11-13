@@ -1,4 +1,4 @@
-import { WriteOnlyFunctionForm } from "@scaffold-stark-2/app/debug/_components/contract";
+import { WriteOnlyFunctionForm } from "./WriteOnlyFunctionForm";
 import { Contract, ContractName, getFunctionsByStateMutability } from "@scaffold-stark-2/utils/scaffold-stark/contract";
 import { Abi } from "abi-wan-kanabi";
 

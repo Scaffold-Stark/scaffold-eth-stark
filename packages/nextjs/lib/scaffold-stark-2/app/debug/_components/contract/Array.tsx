@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { ContractInput } from "./ContractInput";
 import { getFunctionInputKey, getInitialTupleFormState } from "./utilsContract";
+import { FormErrorMessageState } from "./utilsDisplay";
 import { parseGenericType } from "@scaffold-stark-2/utils/scaffold-stark";
 import { replacer } from "@scaffold-stark-2/utils/scaffold-stark/common";
-import { AbiEnum, AbiParameter, AbiStruct } from "@scaffold-stark-2/utils/scaffold-stark/contract";
+import { AbiParameter } from "@scaffold-stark-2/utils/scaffold-stark/contract";
 import { Abi } from "abi-wan-kanabi";
 
 type ArrayProps = {
@@ -12,7 +13,7 @@ type ArrayProps = {
   parentForm: Record<string, any> | undefined;
   setParentForm: (form: Record<string, any>) => void;
   parentStateObjectKey: string;
-  setFormErrorMessage: Dispatch<SetStateAction<string | null>>;
+  setFormErrorMessage: Dispatch<SetStateAction<FormErrorMessageState>>;
 };
 
 export const ArrayInput = ({
@@ -57,22 +58,19 @@ export const ArrayInput = ({
                 abi={abi}
                 key={index}
                 setForm={(nextInputRecipe: Record<string, any> | ((arg: Record<string, any>) => void)) => {
-                  let nextInputObject: Record<string, any> = nextInputRecipe;
+                  // if we find a function (a.k.a setState recipe), we run it to generate the next state based on recpe, else just use the object passed in
+                  const nextInputObject: Record<string, any> =
+                    typeof nextInputRecipe === "function" ? nextInputRecipe(parentForm!) : nextInputRecipe;
 
-                  // set state recipe function, handle
-                  if (typeof nextInputRecipe === "function") {
-                    nextInputObject = nextInputRecipe(parentForm!);
-                  }
-
-                  const currentInputArray = { ...inputArr };
-
-                  // we do some nasty workaround
-                  currentInputArray[index] = nextInputObject?.[`input_${index}`] || null;
-
-                  setInputArr(currentInputArray);
+                  setInputArr((currentInputArray: any) => {
+                    return {
+                      ...currentInputArray,
+                      [index]: nextInputObject?.[index] || null,
+                    };
+                  });
                 }}
-                form={inputArr[index]}
-                stateObjectKey={`input_${index}`}
+                form={inputArr}
+                stateObjectKey={index}
                 paramType={
                   {
                     name: `${abiParameter.name}[${index}]`,

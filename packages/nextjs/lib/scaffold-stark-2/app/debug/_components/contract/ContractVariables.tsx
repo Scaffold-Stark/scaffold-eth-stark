@@ -1,12 +1,5 @@
 import { DisplayVariable } from "./DisplayVariable";
-import {
-  AbiFunction,
-  Contract,
-  ContractName,
-  GenericContract,
-  InheritedFunctions,
-  getFunctionsByStateMutability,
-} from "@scaffold-stark-2/utils/scaffold-stark/contract";
+import { Contract, ContractName, getFunctionsByStateMutability } from "@scaffold-stark-2/utils/scaffold-stark/contract";
 import { Abi } from "abi-wan-kanabi";
 
 export const ContractVariables = ({

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import scaffoldConfig from "@scaffold-stark-2/scaffold.config";
-import type { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
+import { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
 import { LAST_CONNECTED_TIME_LOCALSTORAGE_KEY } from "@scaffold-stark-2/utils/Constants";
 import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
 import { useConnect } from "@starknet-react/core";

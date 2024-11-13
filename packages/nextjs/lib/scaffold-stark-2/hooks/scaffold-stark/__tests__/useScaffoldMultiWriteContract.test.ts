@@ -1,7 +1,7 @@
+import { useDeployedContractInfo } from "../useDeployedContractInfo";
 import { createContractCall, useScaffoldMultiWriteContract } from "../useScaffoldMultiWriteContract";
 import { useTargetNetwork } from "../useTargetNetwork";
 import { useTransactor } from "../useTransactor";
-import { useDeployedContractInfo } from "@scaffold-stark-2/hooks/scaffold-stark";
 import { useNetwork, useSendTransaction } from "@starknet-react/core";
 import { act, renderHook } from "@testing-library/react";
 import { Contract, RpcProvider } from "starknet";
@@ -9,7 +9,7 @@ import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock the external dependencies
 
-vi.mock("@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork", () => ({
+vi.mock("../useTargetNetwork", () => ({
   useTargetNetwork: vi.fn(),
 }));
 

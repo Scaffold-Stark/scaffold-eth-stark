@@ -1,5 +1,5 @@
+import { useAccount } from "../useAccount";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { useAccount } from "@scaffold-stark-2/hooks/useAccount";
 import { getBlockExplorerTxLink, notification } from "@scaffold-stark-2/utils/scaffold-stark";
 import { AccountInterface, InvokeFunctionResponse, RpcProvider } from "starknet";
 

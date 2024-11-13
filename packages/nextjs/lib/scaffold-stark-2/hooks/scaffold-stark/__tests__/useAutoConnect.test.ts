@@ -1,10 +1,9 @@
-import { renderHook } from "@testing-library/react";
 import { useAutoConnect } from "../useAutoConnect";
-import { useConnect } from "@starknet-react/core";
-import { useReadLocalStorage } from "usehooks-ts";
 import scaffoldConfig from "@scaffold-stark-2/scaffold.config";
 import { burnerAccounts } from "@scaffold-stark-2/utils/devnetAccounts";
-import type { BurnerConnector } from "@scaffold-stark-2/services/web3/stark-burner/BurnerConnector";
+import { useConnect } from "@starknet-react/core";
+import { renderHook } from "@testing-library/react";
+import { useReadLocalStorage } from "usehooks-ts";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock the dependencies
@@ -16,13 +15,13 @@ vi.mock("@starknet-react/core", () => ({
   useConnect: vi.fn(),
 }));
 
-vi.mock("~~/scaffold.config", () => ({
+vi.mock("@scaffold-stark-2/scaffold.config", () => ({
   default: {
     walletAutoConnect: true,
   },
 }));
 
-vi.mock("~~/utils/devnetAccounts", () => ({
+vi.mock("@scaffold-stark-2/utils/devnetAccounts", () => ({
   burnerAccounts: [{ address: "0x123" }, { address: "0x456" }],
 }));
 
@@ -32,10 +31,7 @@ describe("useAutoConnect", () => {
 
   beforeEach(() => {
     mockConnect = vi.fn();
-    mockConnectors = [
-      { id: "wallet-1" },
-      { id: "burner-wallet", burnerAccount: null },
-    ];
+    mockConnectors = [{ id: "wallet-1" }, { id: "burner-wallet", burnerAccount: null }];
     (useConnect as ReturnType<typeof vi.fn>).mockReturnValue({
       connect: mockConnect,
       connectors: mockConnectors,
@@ -58,9 +54,7 @@ describe("useAutoConnect", () => {
   });
 
   it("should not auto-connect if walletAutoConnect is disabled", () => {
-    vi.spyOn(scaffoldConfig, "walletAutoConnect", "get").mockReturnValue(
-      false as true,
-    );
+    vi.spyOn(scaffoldConfig, "walletAutoConnect", "get").mockReturnValue(false as true);
     vi.mocked(useReadLocalStorage).mockReturnValue({ id: "wallet-1" });
 
     renderHook(() => useAutoConnect());

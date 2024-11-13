@@ -1,17 +1,13 @@
-import { act, renderHook, waitFor } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import { useDeployedContractInfo } from "../useDeployedContractInfo";
-import { ContractCodeStatus } from "@scaffold-stark-2/utils/scaffold-stark/contract";
-import { RpcProvider } from "starknet";
 import { useTargetNetwork } from "../useTargetNetwork";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import { useIsMounted } from "usehooks-ts";
+import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
 
-const mockGetClassHashAt = vi
-  .fn()
-  .mockImplementation(async (): Promise<string | undefined> => "0x1234567");
+const mockGetClassHashAt = vi.fn().mockImplementation(async (): Promise<string | undefined> => "0x1234567");
 
 // Mock the dependencies
-vi.mock("../useTargetNetwork", () => ({
+vi.mock("@scaffold-stark-2/hooks/scaffold-stark/useTargetNetwork", () => ({
   useTargetNetwork: vi.fn(),
 }));
 
@@ -30,8 +26,7 @@ vi.mock("@scaffold-stark-2/utils/scaffold-stark/contract", () => ({
   contracts: {
     someNetwork: {
       YourContract: {
-        address:
-          "0x6e0d97cfd6ad07cea15de51b1761b70cc648948fd183ce03cac9e3a1f8c7f26",
+        address: "0x6e0d97cfd6ad07cea15de51b1761b70cc648948fd183ce03cac9e3a1f8c7f26",
         abi: [
           {
             type: "impl",
@@ -282,8 +277,7 @@ vi.mock("@scaffold-stark-2/utils/scaffold-stark/contract", () => ({
             ],
           },
         ],
-        classHash:
-          "0x15981f4687739d007cf4d6ec112dc72f2e46026c1d1e031ec698fb282d43399",
+        classHash: "0x15981f4687739d007cf4d6ec112dc72f2e46026c1d1e031ec698fb282d43399",
       },
     },
   },
@@ -298,8 +292,7 @@ describe("useDeployedContractInfo", () => {
   const mockContracts = {
     someNetwork: {
       YourContract: {
-        address:
-          "0x6e0d97cfd6ad07cea15de51b1761b70cc648948fd183ce03cac9e3a1f8c7f26",
+        address: "0x6e0d97cfd6ad07cea15de51b1761b70cc648948fd183ce03cac9e3a1f8c7f26",
         abi: [
           {
             type: "impl",
@@ -550,8 +543,7 @@ describe("useDeployedContractInfo", () => {
             ],
           },
         ],
-        classHash:
-          "0x15981f4687739d007cf4d6ec112dc72f2e46026c1d1e031ec698fb282d43399",
+        classHash: "0x15981f4687739d007cf4d6ec112dc72f2e46026c1d1e031ec698fb282d43399",
       },
     },
   };
@@ -612,9 +604,7 @@ describe("useDeployedContractInfo", () => {
     act(async () => {
       await waitFor(() => {
         expect(result.current.isLoading).toBe(false);
-        expect(result.current.data?.address).toEqual(
-          mockContracts.someNetwork.YourContract.address,
-        );
+        expect(result.current.data?.address).toEqual(mockContracts.someNetwork.YourContract.address);
       });
     });
   });

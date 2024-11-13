@@ -1,7 +1,7 @@
 import { useMemo } from "react";
+import { useAccount } from "../useAccount";
+import { useDeployedContractInfo } from "./useDeployedContractInfo";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { useDeployedContractInfo } from "@scaffold-stark-2/hooks/scaffold-stark";
-import { useAccount } from "@scaffold-stark-2/hooks/useAccount";
 import { ContractName } from "@scaffold-stark-2/utils/scaffold-stark/contract";
 import { Contract, RpcProvider } from "starknet";
 

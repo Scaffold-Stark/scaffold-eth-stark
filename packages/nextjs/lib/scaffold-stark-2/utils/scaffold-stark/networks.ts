@@ -26,9 +26,17 @@ export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
 export function getBlockExplorerTxLink(network: string, txnHash: string) {
   const chainNames = Object.keys(chains);
 
+  // const targetChainArr = chainNames.filter(chainName => {
+  //   const wagmiChain = chains[chainName as keyof typeof chains];
+  //   return wagmiChain.network === network;
+  // });
+
   const targetChainArr = chainNames.filter(chainName => {
     const wagmiChain = chains[chainName as keyof typeof chains];
-    return wagmiChain.network === network;
+
+    const chainConfig = typeof wagmiChain === "function" ? wagmiChain("") : wagmiChain;
+
+    return chainConfig.network === network;
   });
 
   if (targetChainArr.length === 0) {
