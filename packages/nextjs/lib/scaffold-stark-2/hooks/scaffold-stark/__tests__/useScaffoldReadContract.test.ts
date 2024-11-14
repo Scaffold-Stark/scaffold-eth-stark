@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react";
 import { Mock, describe, expect, it, vi } from "vitest";
 
 // Mocking dependencies using Vitest
-vi.mock("@scaffold-stark-2/hooks/scaffold-stark", () => ({
+vi.mock("@scaffold-stark-2/hooks/scaffold-stark/useDeployedContractInfo", () => ({
   useDeployedContractInfo: vi.fn(() => ({
     data: {
       address: "0x123",

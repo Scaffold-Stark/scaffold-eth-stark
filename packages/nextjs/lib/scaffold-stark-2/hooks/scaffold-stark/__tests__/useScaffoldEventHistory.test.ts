@@ -8,7 +8,7 @@ import { RpcProvider } from "starknet";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // Mock dependencies
-vi.mock("@scaffold-stark-2/hooks/scaffold-stark", () => ({
+vi.mock("@scaffold-stark-2/hooks/scaffold-stark/useDeployedContractInfo", () => ({
   useDeployedContractInfo: vi.fn(),
 }));
 
