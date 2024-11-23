@@ -8,7 +8,7 @@
 
 ⚙️ Built using NextJS, Starknet.js, Scarb, Starknet-React, Starknet Foundry, RainbowKit, Foundry, Wagmi, Viem, and Typescript.
 
-- 🪝 **[Custom hooks]()**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) and [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
+- 🪝 **[Custom hooks](https://docs.scaffoldstark.com/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) and [starknet-react](https://starknet-react.com/) to simplify interactions with smart contracts with typescript autocompletion.
 - 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with Starknet network and EVM network.
 
 ## Requirements
